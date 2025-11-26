@@ -339,7 +339,7 @@ function Login() {
                   </Button>
                 </Form>
 
-                <div className="text-center">
+                {/* <div className="text-center">
                   <button
                     type="button"
                     className="toggle-button"
@@ -357,7 +357,7 @@ function Login() {
                       ? "Don't have an account? Sign Up"
                       : "Already have an account? Sign In"}
                   </button>
-                </div>
+                </div> */}
               </Card.Body>
             </Card>
           </Col>
