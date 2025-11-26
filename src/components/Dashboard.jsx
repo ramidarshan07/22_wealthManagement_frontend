@@ -259,24 +259,6 @@ function Dashboard() {
           <div className="quick-actions-grid">
             <Button
               className="quick-action-btn"
-              onClick={() => navigate("/category")}
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 7h16M4 12h16M4 17h16"></path>
-              </svg>
-              Category
-            </Button>
-            <Button
-              className="quick-action-btn"
               onClick={() => navigate("/expense")}
             >
               <svg
@@ -293,6 +275,64 @@ function Dashboard() {
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
               </svg>
               Expense
+            </Button>
+            <Button
+              className="quick-action-btn"
+              onClick={() => navigate("/saving")}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              Saving
+            </Button>
+            <Button
+              className="quick-action-btn"
+              onClick={() => navigate("/account")}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M2 7l10-4 10 4-10 4-10-4z"></path>
+                <path d="M4 10v6c0 2 4 4 8 4s8-2 8-4v-6"></path>
+                <path d="M22 10l-10 4-10-4"></path>
+              </svg>
+              Account
+            </Button>
+            <Button
+              className="quick-action-btn"
+              onClick={() => navigate("/category")}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 7h16M4 12h16M4 17h16"></path>
+              </svg>
+              Category
             </Button>
             <Button
               className="quick-action-btn"
@@ -319,26 +359,6 @@ function Dashboard() {
             >
               <span style={{ fontSize: "24px", fontWeight: "bold" }}>₹</span>
               Amount Type
-            </Button>
-            <Button
-              className="quick-action-btn"
-              onClick={() => navigate("/saving")}
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                <polyline points="7 3 7 8 15 8"></polyline>
-              </svg>
-              Saving
             </Button>
           </div>
         </div>

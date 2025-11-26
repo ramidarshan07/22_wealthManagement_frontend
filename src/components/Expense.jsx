@@ -26,6 +26,7 @@ function Expense() {
     startDate: "",
     endDate: "",
     type: "", // "credit", "debit", or ""
+    paymentMethod: "",
   });
   const [expenseFormData, setExpenseFormData] = useState({
     amount: "",
@@ -135,6 +136,15 @@ function Expense() {
         const isCredit = isCreditType(expense.amountType);
         return filters.type === "credit" ? isCredit : !isCredit;
       });
+    }
+
+    // Payment Method filter
+    if (filters.paymentMethod) {
+      filtered = filtered.filter(
+        (expense) =>
+          expense.paymentMethod?._id === filters.paymentMethod ||
+          expense.paymentMethod === filters.paymentMethod
+      );
     }
 
     setFilteredExpenses(filtered);
@@ -402,6 +412,7 @@ function Expense() {
       startDate: "",
       endDate: "",
       type: "",
+      paymentMethod: "",
     });
   };
 
@@ -579,10 +590,31 @@ function Expense() {
               </Form.Group>
             </Col>
 
+            <Col xs={12} md={2}>
+              <Form.Group>
+                <Form.Label>Payment Method</Form.Label>
+                <Form.Select
+                  name="paymentMethod"
+                  value={filters.paymentMethod}
+                  onChange={handleFilterChange}
+                  className="form-control-custom"
+                >
+                  <option value="">All Payment Methods</option>
+                  {paymentMethods
+                    .filter((pm) => pm.status === "active")
+                    .map((paymentMethod) => (
+                      <option key={paymentMethod._id} value={paymentMethod._id}>
+                        {paymentMethod.name}
+                      </option>
+                    ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+
             {/* Clear Filters placed in its own column so everything stays in one row */}
             <Col
               xs={12}
-              md={4}
+              md={2}
               className="d-flex justify-content-end align-items-end"
             >
               <Button
@@ -600,12 +632,12 @@ function Expense() {
           <Table responsive className="expense-table">
             <thead>
               <tr>
+                <th>Date</th>
                 <th>Category</th>
-                <th>Payment Method</th>
+                <th>Description</th>
                 <th>Credit</th>
                 <th>Debit</th>
-                <th>Date</th>
-                <th>Description</th>
+                <th>Payment Method</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -628,9 +660,12 @@ function Expense() {
                     : 0;
                   return (
                     <tr key={expense._id}>
+                      <td>{formatDate(expense.date)}</td>
                       <td>{expense.category?.name || expense.category}</td>
                       <td>
-                        {expense.paymentMethod?.name || expense.paymentMethod}
+                        <span className="description-text">
+                          {expense.description || "-"}
+                        </span>
                       </td>
                       <td className={credit > 0 ? "credit-amount" : ""}>
                         {credit > 0 ? `₹ ${credit.toFixed(2)}` : "-"}
@@ -638,11 +673,8 @@ function Expense() {
                       <td className={debit > 0 ? "debit-amount" : ""}>
                         {debit > 0 ? `₹ ${debit.toFixed(2)}` : "-"}
                       </td>
-                      <td>{formatDate(expense.date)}</td>
                       <td>
-                        <span className="description-text">
-                          {expense.description || "-"}
-                        </span>
+                        {expense.paymentMethod?.name || expense.paymentMethod}
                       </td>
                       <td>
                         <div className="action-buttons">
