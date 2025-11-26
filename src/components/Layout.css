@@ -1,0 +1,14 @@
+.layout {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+}
+
+.main-content {
+    min-height: calc(100vh - 60px);
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+}

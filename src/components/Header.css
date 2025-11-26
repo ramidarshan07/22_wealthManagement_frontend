@@ -1,0 +1,151 @@
+.header-navbar {
+    background-color: rgb(30, 30, 30);
+    border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(77, 255, 0, 0.196);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    flex: 0 0 auto;
+}
+
+.header-user-name {
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin: 0;
+    background: linear-gradient(135deg, var(--text-light) 0%, #00ffa6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    white-space: nowrap;
+}
+
+.header-logo {
+    height: 40px;
+    width: auto;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+.profile-toggle {
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.profile-toggle:hover {
+    border-color: var(--accent-orange);
+    transform: scale(1.05);
+}
+
+.profile-dropdown-menu {
+    background-color: rgb(30, 30, 30);
+    border: 1px solid rgba(57, 255, 20, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    margin-top: 0.5rem;
+    padding: 0;
+    min-width: 250px;
+}
+
+.profile-info {
+    padding: 1rem;
+    color: var(--text-light);
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-light);
+}
+
+.profile-email {
+    font-size: 0.875rem;
+    color: var(--text-gray);
+}
+
+.logout-button {
+    background: none;
+    color: var(--text-light);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    border-color: var(--accent-orange);
+    transform: translateY(-2px);
+}
+
+.logout-button:active {
+    transform: translateY(0);
+}
+
+.logout-button svg {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-user-name {
+        font-size: 1.5rem;
+    }
+
+    .header-center {
+        left: auto;
+        transform: none;
+        position: static;
+        order: 2;
+    }
+
+    .header-left {
+        order: 1;
+    }
+
+    .header-right {
+        order: 3;
+    }
+
+    .header-container {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
