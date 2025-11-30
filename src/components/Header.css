@@ -19,8 +19,35 @@
 .header-left {
     display: flex;
     align-items: center;
-    cursor: pointer;
     flex: 0 0 auto;
+}
+
+.mobile-sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-sidebar-toggle:hover {
+    background-color: rgba(57, 255, 20, 0.1);
+    color: var(--accent-orange);
+}
+
+.mobile-sidebar-toggle:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .mobile-sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .header-center {

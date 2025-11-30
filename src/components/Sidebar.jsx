@@ -2,7 +2,7 @@ import { Nav } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
-function Sidebar() {
+function Sidebar({ isMobileSidebarOpen, closeMobileSidebar }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -140,10 +140,14 @@ function Sidebar() {
 
   const handleNavClick = (path) => {
     navigate(path);
+    // Close sidebar on mobile when navigation item is clicked
+    if (window.innerWidth <= 768) {
+      closeMobileSidebar();
+    }
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isMobileSidebarOpen ? "mobile-open" : ""}`}>
       <div>
         <Nav className="flex-column sidebar-nav">
           {menuItems.map((item) => (
