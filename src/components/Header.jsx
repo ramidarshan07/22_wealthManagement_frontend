@@ -24,8 +24,21 @@ function Header({ toggleMobileSidebar, isMobileSidebarOpen }) {
       color: "#f5f5f5",
     }).then((result) => {
       if (result.isConfirmed) {
+        // Save Remember Me credentials before clearing
+        const rememberedEmail = localStorage.getItem("rememberedEmail");
+        const rememberedPassword = localStorage.getItem("rememberedPassword");
+        const rememberMe = localStorage.getItem("rememberMe");
+
         // Clear all localStorage
         localStorage.clear();
+
+        // Restore Remember Me credentials if they exist
+        if (rememberMe === "true" && rememberedEmail && rememberedPassword) {
+          localStorage.setItem("rememberedEmail", rememberedEmail);
+          localStorage.setItem("rememberedPassword", rememberedPassword);
+          localStorage.setItem("rememberMe", rememberMe);
+        }
+
         // Redirect to login
         navigate("/login");
         Swal.fire({
