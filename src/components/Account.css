@@ -133,7 +133,7 @@
 
 .account-card-body small {
     display: block;
-    color: #969696;
+    color: #9c9c9c;
     font-size: 12px;
     margin-bottom: 4px;
 }
@@ -141,6 +141,7 @@
 .account-card-body p {
     margin: 0;
     font-weight: 600;
+    color: #5a5a5a;
 }
 
 .account-card-body .outstanding {
@@ -407,12 +408,214 @@
     }
 
     .account-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        font-size: 13px;
+        color: #a5a5a5;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
     }
 
-    .summary-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    .summary-card h3,
+    .summary-card h4 {
+        margin: 6px 0 0;
+        color: #ffffff;
+    }
+
+    .summary-card.highlight {
+        background: linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(15, 65, 40, 0.9));
+        border-color: rgba(57, 255, 20, 0.35);
+    }
+
+    .summary-card.highlight-2 {
+        background: linear-gradient(135deg, rgba(255, 98, 20, 0.15), rgba(255, 25, 0, 0.221));
+        border-color: rgba(255, 0, 0, 0.35);
+    }
+
+    .transactions-section {
+        margin-top: 24px;
+    }
+
+    .transactions-table table,
+    .transactions-table .table {
+        color: #f5f5f5;
+        margin: 0;
+        background: #121212;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .transactions-table thead {
+        background: rgba(57, 255, 20, 0.08);
+    }
+
+    .transactions-table tbody {
+        background: #111;
+    }
+
+    .transactions-table th,
+    .transactions-table td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: middle;
+        background: transparent;
+        color: #f5f5f5 !important;
+    }
+
+    .transactions-table td span,
+    .transactions-table td p,
+    .transactions-table td strong {
+        color: inherit;
+    }
+
+    .transactions-table tbody tr:hover {
+        background: rgba(57, 255, 20, 0.06);
+    }
+
+    .txn-pill {
+        display: inline-flex;
+        padding: 2px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .txn-borrow {
+        background: rgba(255, 92, 92, 0.15);
+        color: #ff6b6b;
+    }
+
+    .txn-repay {
+        background: rgba(61, 214, 142, 0.15);
+        color: #3dd68e;
+    }
+
+    .delete-entry-btn {
+        background: transparent;
+        border: none;
+        color: #ff5c5c;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 4px 10px;
+    }
+
+    .note-cell {
+        max-width: 240px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .account-modal .modal-content {
+        background: #1a1a1a;
+        color: #f5f5f5;
+        border-radius: 16px;
+    }
+
+    .account-modal .modal-content {
+        border: 1px solid rgba(57, 255, 20, 0.2);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+    }
+
+    .account-modal .modal-header {
+        border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+    }
+
+    .account-modal .modal-title {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .account-modal .form-control,
+    .account-modal .form-select {
+        background: rgba(10, 10, 10, 0.85);
+        border: 1px solid rgba(57, 255, 20, 0.3);
+        color: #ffffff;
+        transition: all 0.2s ease;
+    }
+
+    .account-modal .form-control:focus,
+    .account-modal .form-select:focus {
+        border-color: rgba(57, 255, 20, 0.8);
+        box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.15);
+        background: rgba(13, 13, 13, 0.95);
+    }
+
+    .account-modal .cancel-button {
+        background-color: rgba(108, 117, 125, 0.15);
+        border: 1px solid rgba(108, 117, 125, 0.4);
+        color: #f5f5f5;
+        font-weight: 600;
+    }
+
+    .account-modal .cancel-button:hover {
+        background-color: rgba(108, 117, 125, 0.3);
+        border-color: rgba(108, 117, 125, 0.6);
+    }
+
+    .account-modal .save-button {
+        background: linear-gradient(135deg, #39ff14, #12c964);
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 8px 24px rgba(57, 255, 20, 0.35);
+    }
+
+    .account-modal .save-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .account-modal .save-button:not(:disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 30px rgba(57, 255, 20, 0.45);
+    }
+
+    @media (max-width: 992px) {
+        .account-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .account-list-panel,
+        .account-detail-panel {
+            min-height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .account-container {
+            width: 100%;
+            margin-left: 0;
+            padding-top: 16px;
+        }
+
+        .account-content {
+            padding: 0 16px 24px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .account-content {
+            padding: 0 12px 20px;
+        }
+
+        .account-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .summary-grid {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+    }
+
+    .amount-display {
+        color: #ffffff !important;
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+        font-weight: 700;
     }
 }

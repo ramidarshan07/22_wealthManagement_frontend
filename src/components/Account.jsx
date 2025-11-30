@@ -27,6 +27,7 @@ function Account() {
   const [showTransactionModal, setShowTransactionModal] = useState(false);
   const [accountFormData, setAccountFormData] = useState({
     name: "",
+    accountType: "borrowed",
     initialAmount: "",
     date: defaultDate(),
     paymentChannel: "Cash",
@@ -34,7 +35,7 @@ function Account() {
     description: "",
   });
   const [transactionFormData, setTransactionFormData] = useState({
-    type: "repay",
+    type: "",
     amount: "",
     paymentChannel: "Cash",
     date: defaultDate(),
@@ -134,6 +135,7 @@ function Account() {
   const handleOpenAccountModal = () => {
     setAccountFormData({
       name: "",
+      accountType: "borrowed",
       initialAmount: "",
       date: defaultDate(),
       paymentChannel: "Cash",
@@ -181,6 +183,7 @@ function Account() {
         },
         body: JSON.stringify({
           name: accountFormData.name.trim(),
+          accountType: accountFormData.accountType,
           initialAmount,
           date: accountFormData.date,
           paymentChannel: accountFormData.paymentChannel,
@@ -249,8 +252,10 @@ function Account() {
       const data = await response.json();
       if (response.ok) {
         toast.success("Entry added successfully");
+        const defaultType =
+          selectedAccount.accountType === "lent" ? "received" : "repay";
         setTransactionFormData({
-          type: "repay",
+          type: defaultType,
           amount: "",
           paymentChannel: "Cash",
           date: defaultDate(),
@@ -369,7 +374,10 @@ function Account() {
                     onClick={() => handleSelectAccount(account._id)}
                   >
                     <div className="account-card-header">
-                      <h4>{account.name}</h4>
+                      <h4>
+                        {account.name} -{" "}
+                        {account.accountType === "lent" ? "Lent" : "Borrowed"}
+                      </h4>
                       <Badge
                         bg={
                           account.summary?.outstanding > 0
@@ -384,12 +392,24 @@ function Account() {
                     </div>
                     <div className="account-card-body">
                       <div>
-                        <small>Total Borrowed</small>
-                        <p>{formatCurrency(account.summary?.totalBorrowed)}</p>
+                        <small>
+                          {account.accountType === "lent"
+                            ? "Total Lent"
+                            : "Total Borrowed"}
+                        </small>
+                        <p className="amount-display">
+                          {formatCurrency(account.summary?.totalBorrowed)}
+                        </p>
                       </div>
                       <div>
-                        <small>Total Paid</small>
-                        <p>{formatCurrency(account.summary?.totalRepaid)}</p>
+                        <small>
+                          {account.accountType === "lent"
+                            ? "Total Received"
+                            : "Total Paid"}
+                        </small>
+                        <p className="amount-display">
+                          {formatCurrency(account.summary?.totalRepaid)}
+                        </p>
                       </div>
                       <div>
                         <small>Remaining</small>
@@ -428,8 +448,12 @@ function Account() {
                   <Button
                     className="add-transaction-btn"
                     onClick={() => {
+                      const defaultType =
+                        selectedAccount.accountType === "lent"
+                          ? "received"
+                          : "repay";
                       setTransactionFormData({
-                        type: "repay",
+                        type: defaultType,
                         amount: "",
                         paymentChannel: "Cash",
                         date: defaultDate(),
@@ -444,14 +468,22 @@ function Account() {
 
                 <div className="summary-grid">
                   <div className="summary-card">
-                    <p>Total Borrowed</p>
-                    <h3>
+                    <p>
+                      {selectedAccount.accountType === "lent"
+                        ? "Total Lent"
+                        : "Total Borrowed"}
+                    </p>
+                    <h3 className="amount-display">
                       {formatCurrency(selectedAccount.summary?.totalBorrowed)}
                     </h3>
                   </div>
                   <div className="summary-card highlight">
-                    <p>Total Paid</p>
-                    <h3>
+                    <p>
+                      {selectedAccount.accountType === "lent"
+                        ? "Total Received"
+                        : "Total Paid"}
+                    </p>
+                    <h3 className="amount-display">
                       {formatCurrency(selectedAccount.summary?.totalRepaid)}
                     </h3>
                   </div>
@@ -460,7 +492,11 @@ function Account() {
                     <h3>{formatCurrency(Math.max(outstandingAmount, 0))}</h3>
                   </div>
                   <div className="summary-card">
-                    <p>Last Payment</p>
+                    <p>
+                      {selectedAccount.accountType === "lent"
+                        ? "Last Received"
+                        : "Last Payment"}
+                    </p>
                     <h4>
                       {formatDate(selectedAccount.summary?.lastRepaymentDate)}
                     </h4>
@@ -494,17 +530,24 @@ function Account() {
                                 <td>
                                   <span
                                     className={`txn-pill ${
-                                      txn.type === "borrow"
+                                      txn.type === "borrow" ||
+                                      txn.type === "lent"
                                         ? "txn-borrow"
                                         : "txn-repay"
                                     }`}
                                   >
-                                    {txn.type === "borrow" ? "Borrow" : "Repay"}
+                                    {txn.type === "borrow"
+                                      ? "Borrow"
+                                      : txn.type === "lent"
+                                      ? "Lent"
+                                      : txn.type === "received"
+                                      ? "Received"
+                                      : "Repay"}
                                   </span>
                                 </td>
                                 <td
                                   className={
-                                    txn.type === "borrow"
+                                    txn.type === "borrow" || txn.type === "lent"
                                       ? "text-danger"
                                       : "text-success"
                                   }
@@ -563,10 +606,29 @@ function Account() {
               />
             </Form.Group>
 
+            <Form.Group className="mb-3">
+              <Form.Label>Account Type</Form.Label>
+              <Form.Select
+                name="accountType"
+                value={accountFormData.accountType}
+                onChange={handleAccountChange}
+                required
+              >
+                <option value="borrowed">
+                  Borrowed (I borrowed money from this person)
+                </option>
+                <option value="lent">Lent (I lent money to this person)</option>
+              </Form.Select>
+            </Form.Group>
+
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Amount Borrowed</Form.Label>
+                  <Form.Label>
+                    {accountFormData.accountType === "lent"
+                      ? "Amount Lent"
+                      : "Amount Borrowed"}
+                  </Form.Label>
                   <Form.Control
                     type="number"
                     name="initialAmount"
@@ -676,9 +738,21 @@ function Account() {
                     name="type"
                     value={transactionFormData.type}
                     onChange={handleTransactionChange}
+                    required
                   >
-                    <option value="borrow">Borrow (took money)</option>
-                    <option value="repay">Repay (gave money)</option>
+                    {selectedAccount?.accountType === "lent" ? (
+                      <>
+                        <option value="lent">Lent (gave money)</option>
+                        <option value="received">
+                          Received (got money back)
+                        </option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="borrow">Borrow (took money)</option>
+                        <option value="repay">Repay (gave money)</option>
+                      </>
+                    )}
                   </Form.Select>
                 </Form.Group>
               </Col>
