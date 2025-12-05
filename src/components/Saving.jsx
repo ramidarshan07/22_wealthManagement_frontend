@@ -422,7 +422,10 @@ function Saving() {
         {/* Header: title / total / add button in one line */}
         <div className="saving-header">
           <div className="saving-header-item header-left">
-            <h1 className="saving-title">SAVING</h1>
+            <div>
+              <p className="account-eyebrow">SAVINGS TRACKER</p>
+              <h1 className="saving-title">SAVING</h1>
+            </div>
           </div>
 
           <div className="saving-header-item header-center">

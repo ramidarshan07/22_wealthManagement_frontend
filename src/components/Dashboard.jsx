@@ -196,7 +196,10 @@ function Dashboard() {
     <div className="dashboard-container">
       <Container fluid className="dashboard-content">
         <div className="dashboard-header">
-          <h1 className="dashboard-title">DASHBOARD</h1>
+          <div>
+            <p className="account-eyebrow">FINANCIAL INSIGHTS</p>
+            <h1 className="dashboard-title">DASHBOARD</h1>
+          </div>
           <div className="total-balance-badge">
             <span className="balance-label">Total Balance:</span>
             <span className="balance-value">₹ {totalBalance.toFixed(2)}</span>

@@ -505,7 +505,10 @@ function Expense() {
     <div className="expense-container">
       <Container fluid className="expense-content">
         <div className="expense-header">
-          <h1 className="expense-title">EXPENSE</h1>
+          <div>
+            <p className="account-eyebrow">EXPENSE TRACKER</p>
+            <h1 className="expense-title">EXPENSE</h1>
+          </div>
           <Button
             className="add-button"
             onClick={() => handleOpenExpenseModal()}

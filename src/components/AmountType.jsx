@@ -255,7 +255,10 @@ function AmountType() {
     <div className="amount-type-container">
       <Container fluid className="amount-type-content">
         <div className="amount-type-header">
-          <h1 className="amount-type-title">AMOUNT TYPE</h1>
+          <div>
+            <p className="account-eyebrow">MANAGE AMOUNT TYPES</p>
+            <h1 className="amount-type-title">AMOUNT TYPE</h1>
+          </div>
           <Button className="add-button" onClick={() => handleOpenModal()}>
             <svg
               width="20"

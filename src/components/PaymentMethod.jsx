@@ -255,7 +255,10 @@ function PaymentMethod() {
     <div className="payment-method-container">
       <Container fluid className="payment-method-content">
         <div className="payment-method-header">
-          <h1 className="payment-method-title">PAYMENT METHOD</h1>
+          <div>
+            <p className="account-eyebrow">PAYMENT OPTIONS</p>
+            <h1 className="payment-method-title">PAYMENT METHOD</h1>
+          </div>
           <Button className="add-button" onClick={() => handleOpenModal()}>
             <svg
               width="20"
