@@ -10,6 +10,7 @@ import AmountType from "./components/AmountType";
 import Expense from "./components/Expense";
 import Saving from "./components/Saving";
 import Account from "./components/Account";
+import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="expense" element={<Expense />} />
           <Route path="saving" element={<Saving />} />
           <Route path="account" element={<Account />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>

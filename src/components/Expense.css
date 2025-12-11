@@ -1,492 +1,519 @@
 .expense-container {
-    background: linear-gradient(135deg, var(--primary-black) 0%, var(--secondary-black) 100%);
-    min-height: calc(100vh - 60px);
-    margin-left: 250px;
-    padding-top: 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary-black) 0%,
+    var(--secondary-black) 100%
+  );
+  min-height: calc(100vh - 60px);
+  margin-left: 250px;
+  padding-top: 2rem;
 }
 
 .expense-content {
-    padding: 0 2rem 2rem 2rem;
+  padding: 0 2rem 2rem 2rem;
 }
 
 .expense-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .account-eyebrow {
-    font-size: 12px;
-    color: #8c8c8c;
+  font-size: 12px;
+  color: #8c8c8c;
 }
 
 .filters-section {
-    background-color: rgb(30, 30, 30);
-    border: 1px solid rgba(57, 255, 20, 0.2);
-    border-radius: 16px;
-    padding: 1.25rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background-color: rgb(30, 30, 30);
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* ensure labels align nicely when we use align-items-end on the Row */
 .filters-section .form-label {
-    color: var(--text-light);
-    font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 0.4rem;
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
 }
 
 .filter-actions {
-    margin-top: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  margin-top: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* smaller, neater clear button */
 .clear-filters-btn {
-    background-color: rgba(108, 117, 125, 0.2);
-    border: 1px solid rgba(108, 117, 125, 0.3);
-    color: var(--text-light);
-    padding: 0.55rem 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.25s ease;
+  background-color: rgba(108, 117, 125, 0.2);
+  border: 1px solid rgba(108, 117, 125, 0.3);
+  color: var(--text-light);
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.25s ease;
 }
 
 .clear-filters-btn:hover {
-    background-color: rgba(108, 117, 125, 0.3);
-    border-color: rgba(108, 117, 125, 0.5);
-    transform: translateY(-2px);
+  background-color: rgba(108, 117, 125, 0.3);
+  border-color: rgba(108, 117, 125, 0.5);
+  transform: translateY(-2px);
 }
 
 .description-text {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .expense-title {
-    color: var(--text-light);
-    font-weight: 700;
-    font-size: 2rem;
-    margin: 0;
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-orange) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  color: var(--text-light);
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    var(--text-light) 0%,
+    var(--accent-orange) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .header-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .add-button {
-    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-dark) 100%);
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--text-light);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--accent-orange) 0%,
+    var(--accent-orange-dark) 100%
+  );
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3f3f3f;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .add-button:hover {
-    background: linear-gradient(135deg, var(--accent-orange-dark) 0%, var(--accent-orange) 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
+  background: linear-gradient(
+    135deg,
+    var(--accent-orange-dark) 0%,
+    var(--accent-orange) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
 }
 
 .add-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .expense-table-wrapper {
-    background-color: rgb(30, 30, 30) !important;
-    border: 1px solid rgba(57, 255, 20, 0.2) !important;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
+  background-color: rgb(30, 30, 30) !important;
+  border: 1px solid rgba(57, 255, 20, 0.2) !important;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 
 .expense-table {
-    margin: 0;
-    color: var(--text-light);
-    background-color: rgb(30, 30, 30) !important;
+  margin: 0;
+  color: var(--text-light);
+  background-color: rgb(30, 30, 30) !important;
 }
 
 .expense-table tbody {
-    background-color: rgb(30, 30, 30) !important;
+  background-color: rgb(30, 30, 30) !important;
 }
 
 .expense-table thead {
-    background-color: rgba(57, 255, 20, 0.1);
-    border-bottom: 2px solid rgba(57, 255, 20, 0.2);
+  background-color: rgba(57, 255, 20, 0.1);
+  border-bottom: 2px solid rgba(57, 255, 20, 0.2);
 }
 
 .expense-table thead th {
-    color: var(--text-light);
-    font-weight: 600;
-    padding: 1rem;
-    border: none;
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    letter-spacing: 0.5px;
-    background-color: rgba(57, 255, 20, 0.1) !important;
+  color: var(--text-light);
+  font-weight: 600;
+  padding: 1rem;
+  border: none;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+  background-color: rgba(57, 255, 20, 0.1) !important;
 }
 
 .expense-table tbody tr {
-    border-bottom: 1px solid rgba(57, 255, 20, 0.1);
-    transition: all 0.3s ease;
-    background-color: rgb(30, 30, 30) !important;
+  border-bottom: 1px solid rgba(57, 255, 20, 0.1);
+  transition: all 0.3s ease;
+  background-color: rgb(30, 30, 30) !important;
 }
 
 .expense-table tbody tr:hover {
-    background-color: rgba(57, 255, 20, 0.05);
+  background-color: rgba(57, 255, 20, 0.05);
 }
 
 .expense-table tbody tr:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .expense-table tbody td {
-    padding: 1rem;
-    border: none;
-    color: var(--text-light);
-    vertical-align: middle;
-    background-color: rgb(30, 30, 30) !important;
+  padding: 1rem;
+  border: none;
+  color: var(--text-light);
+  vertical-align: middle;
+  background-color: rgb(30, 30, 30) !important;
 }
 
 .credit-amount {
-    color: #28a745 !important;
-    font-weight: 600;
+  color: #28a745 !important;
+  font-weight: 600;
 }
 
 .debit-amount {
-    color: #dc3545 !important;
-    font-weight: 600;
+  color: #dc3545 !important;
+  font-weight: 600;
 }
 
 .no-data {
-    color: var(--text-gray);
-    padding: 3rem !important;
-    font-style: italic;
+  color: var(--text-gray);
+  padding: 3rem !important;
+  font-style: italic;
 }
 
 .action-buttons {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .edit-button,
 .delete-button {
-    background: none;
-    border: 1px solid rgba(57, 255, 20, 0.3);
-    color: var(--text-light);
-    padding: 0.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    background-color: rgba(57, 255, 20, 0.1);
+  background: none;
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  color: var(--text-light);
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: rgba(57, 255, 20, 0.1);
 }
 
 .edit-button:hover {
-    background-color: rgba(57, 255, 20, 0.2);
-    border-color: var(--accent-orange);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
+  background-color: rgba(57, 255, 20, 0.2);
+  border-color: var(--accent-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
 }
 
 .delete-button:hover {
-    background-color: rgba(220, 53, 69, 0.2);
-    border-color: #dc3545;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  background-color: rgba(220, 53, 69, 0.2);
+  border-color: #dc3545;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
 
 .edit-button:active,
 .delete-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .edit-button svg,
 .delete-button svg {
-    display: block;
+  display: block;
 }
 
 /* Modal Styles */
 .expense-modal .modal-content,
 .category-modal .modal-content {
-    background-color: rgb(30, 30, 30);
-    border: 1px solid rgba(57, 255, 20, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  background-color: rgb(30, 30, 30);
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .modal-header {
-    border-bottom: 1px solid rgba(57, 255, 20, 0.2);
-    padding: 1.5rem;
+  border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+  padding: 1.5rem;
 }
 
 .modal-header .modal-title {
-    color: var(--text-light);
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-orange) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  color: var(--text-light);
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    var(--text-light) 0%,
+    var(--accent-orange) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .modal-header .btn-close {
-    filter: invert(1);
-    opacity: 0.8;
+  filter: invert(1);
+  opacity: 0.8;
 }
 
 .modal-header .btn-close:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .expense-modal .modal-body,
 .category-modal .modal-body {
-    padding: 1.5rem;
+  padding: 1.5rem;
 }
 
 .expense-modal .form-label,
 .category-modal .form-label {
-    color: var(--text-light);
-    font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .expense-modal .form-control-custom,
 .category-modal .form-control-custom {
-    background-color: rgba(10, 10, 10, 0.8);
-    border: 1px solid rgba(57, 255, 20, 0.3);
-    border-radius: 8px;
-    color: var(--text-light);
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
+  background-color: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  border-radius: 8px;
+  color: var(--text-light);
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
 }
 
 .expense-modal .form-control-custom:focus,
 .category-modal .form-control-custom:focus {
-    background-color: rgba(10, 10, 10, 0.9);
-    border-color: var(--accent-orange);
-    box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
-    color: var(--text-light);
-    outline: none;
+  background-color: rgba(10, 10, 10, 0.9);
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
+  color: var(--text-light);
+  outline: none;
 }
 
 .expense-modal .form-control-custom::placeholder,
 .category-modal .form-control-custom::placeholder {
-    color: var(--text-gray);
-    opacity: 0.6;
+  color: var(--text-gray);
+  opacity: 0.6;
 }
 
 .expense-modal select.form-control-custom,
 .category-modal select.form-control-custom {
-    background-color: rgba(10, 10, 10, 0.8);
-    color: var(--text-light);
+  background-color: rgba(10, 10, 10, 0.8);
+  color: var(--text-light);
 }
 
 .expense-modal select.form-control-custom option,
 .category-modal select.form-control-custom option {
-    background-color: rgb(30, 30, 30);
-    color: var(--text-light);
+  background-color: rgb(30, 30, 30);
+  color: var(--text-light);
 }
 
 .category-select-search {
-    position: relative;
+  position: relative;
 }
 
 .category-select-search .category-search-input {
-    padding-right: 5rem;
-    cursor: pointer;
+  padding-right: 5rem;
+  cursor: pointer;
 }
 
 .category-select-search .category-clear-btn,
 .category-select-search .category-dropdown-toggle {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    color: var(--text-light);
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background 0.2s ease, color 0.2s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .category-select-search .category-clear-btn {
-    right: 2.5rem;
-    font-size: 1.25rem;
-    line-height: 1;
+  right: 2.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
 }
 
 .category-select-search .category-dropdown-toggle {
-    right: 0.4rem;
+  right: 0.4rem;
 }
 
 .category-select-search .category-clear-btn:hover,
 .category-select-search .category-dropdown-toggle:hover {
-    background-color: rgba(57, 255, 20, 0.15);
-    color: var(--accent-orange);
+  background-color: rgba(57, 255, 20, 0.15);
+  color: var(--accent-orange);
 }
 
 .category-options-list {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 6px);
-    background-color: rgb(20, 20, 20);
-    border: 1px solid rgba(57, 255, 20, 0.3);
-    border-radius: 12px;
-    max-height: 230px;
-    overflow-y: auto;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-    z-index: 25;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  background-color: rgb(20, 20, 20);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  border-radius: 12px;
+  max-height: 230px;
+  overflow-y: auto;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  z-index: 25;
 }
 
 .category-option {
-    width: 100%;
-    text-align: left;
-    padding: 0.65rem 1rem;
-    background: transparent;
-    border: none;
-    color: var(--text-light);
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
+  width: 100%;
+  text-align: left;
+  padding: 0.65rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .category-option:hover {
-    background-color: rgba(57, 255, 20, 0.15);
-    color: var(--accent-orange);
+  background-color: rgba(57, 255, 20, 0.15);
+  color: var(--accent-orange);
 }
 
 .category-option.selected {
-    background-color: rgba(57, 255, 20, 0.2);
-    color: var(--accent-orange);
-    font-weight: 600;
+  background-color: rgba(57, 255, 20, 0.2);
+  color: var(--accent-orange);
+  font-weight: 600;
 }
 
 .category-option.empty {
-    cursor: default;
-    text-align: center;
-    color: var(--text-gray);
+  cursor: default;
+  text-align: center;
+  color: var(--text-gray);
 }
 
 .modal-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
 }
 
 .cancel-button {
-    background-color: rgba(108, 117, 125, 0.2);
-    border: 1px solid rgba(108, 117, 125, 0.3);
-    color: var(--text-light);
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+  background-color: rgba(108, 117, 125, 0.2);
+  border: 1px solid rgba(108, 117, 125, 0.3);
+  color: var(--text-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .cancel-button:hover {
-    background-color: rgba(108, 117, 125, 0.3);
-    border-color: rgba(108, 117, 125, 0.5);
-    transform: translateY(-2px);
+  background-color: rgba(108, 117, 125, 0.3);
+  border-color: rgba(108, 117, 125, 0.5);
+  transform: translateY(-2px);
 }
 
 .save-button {
-    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-dark) 100%);
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    color: var(--text-light);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+  background: linear-gradient(
+    135deg,
+    var(--accent-orange) 0%,
+    var(--accent-orange-dark) 100%
+  );
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: var(--text-light);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
 }
 
 .save-button:hover:not(:disabled) {
-    background: linear-gradient(135deg, var(--accent-orange-dark) 0%, var(--accent-orange) 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
+  background: linear-gradient(
+    135deg,
+    var(--accent-orange-dark) 0%,
+    var(--accent-orange) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
 }
 
 .save-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Responsive adjustments */
 @media (max-width: 1100px) {
-
-    /* let filters wrap earlier if needed */
-    .filters-section .row>[class*="col-"] {
-        margin-bottom: 0.5rem;
-    }
+  /* let filters wrap earlier if needed */
+  .filters-section .row > [class*="col-"] {
+    margin-bottom: 0.5rem;
+  }
 }
 
 @media (max-width: 768px) {
-    .expense-container {
-        margin-left: 0;
-        padding-top: 1rem;
-    }
+  .expense-container {
+    margin-left: 0;
+    padding-top: 1rem;
+  }
 
-    .expense-content {
-        padding: 0 1rem 1rem 1rem;
-    }
+  .expense-content {
+    padding: 0 1rem 1rem 1rem;
+  }
 
-    .expense-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .expense-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .expense-title {
-        font-size: 1.5rem;
-    }
+  .expense-title {
+    font-size: 1.5rem;
+  }
 
-    .expense-table-wrapper {
-        overflow-x: auto;
-    }
+  .expense-table-wrapper {
+    overflow-x: auto;
+  }
 
-    .expense-table {
-        min-width: 600px;
-    }
+  .expense-table {
+    min-width: 600px;
+  }
 
-    .header-buttons {
-        width: 100%;
-    }
+  .header-buttons {
+    width: 100%;
+  }
 
-    .add-button {
-        flex: 1;
-        justify-content: center;
-    }
+  .add-button {
+    flex: 1;
+    justify-content: center;
+  }
 }

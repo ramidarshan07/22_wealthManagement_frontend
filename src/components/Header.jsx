@@ -127,6 +127,14 @@ function Header({ toggleMobileSidebar, isMobileSidebarOpen }) {
                 <div className="profile-name">{userName}</div>
                 <div className="profile-email">{userEmail}</div>
               </Dropdown.ItemText>
+              <Dropdown.Divider />
+              <Dropdown.Item
+                as="button"
+                className="profile-item"
+                onClick={() => navigate("/profile")}
+              >
+                Profile
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
