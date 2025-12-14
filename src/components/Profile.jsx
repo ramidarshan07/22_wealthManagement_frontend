@@ -363,7 +363,7 @@ const Profile = () => {
                       placeholder="Enter UPI ID"
                     />
                   </Col>
-                </Row>
+                </Row>*/}
 
                 <div className="mt-4 d-flex justify-content-end">
                   <Button
@@ -374,7 +374,7 @@ const Profile = () => {
                     {updating ? "Saving..." : "Save Profile Details"}
                   </Button>
                 </div>
-              </div> */}
+                {/* </div>  */}
               </Form>
             </Card>
           </Col>
