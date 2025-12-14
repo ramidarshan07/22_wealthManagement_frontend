@@ -215,57 +215,59 @@ const Profile = () => {
   }
 
   return (
-    <Container className="profile-container">
-      <h2 className="mb-4 title">MY PROFILE</h2>
+    <div className="profile-container">
+      <Container fluid className="profile-content">
+        <p className="account-eyebrow">USER INFORMATION</p>
+        <h2 className="mb-4 title">MY PROFILE</h2>
 
-      <Row className="g-4">
-        <Col lg={8}>
-          <Card className="profile-card mb-4">
-            <div className="profile-header">
-              <h3 className="profile-title">Personal Information</h3>
-            </div>
-            <Form onSubmit={handleProfileUpdate}>
-              <div className="profile-section">
-                <Row>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Full Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="name"
-                      value={userData.name}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      required
-                      disabled
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      value={userData.email}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      required
-                      disabled
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                      type="tel"
-                      name="phone"
-                      value={userData.phone || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="Enter phone number"
-                    />
-                  </Col>
-                </Row>
+        <Row className="g-4">
+          <Col lg={8}>
+            <Card className="profile-card mb-4">
+              <div className="profile-header">
+                <h3 className="profile-title">Personal Information</h3>
               </div>
+              <Form onSubmit={handleProfileUpdate}>
+                <div className="profile-section">
+                  <Row>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Full Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        value={userData.name}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        required
+                        disabled
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Email Address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        required
+                        disabled
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
+                        type="tel"
+                        name="phone"
+                        value={userData.phone || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="Enter phone number"
+                      />
+                    </Col>
+                  </Row>
+                </div>
 
-              {/* <div className="profile-header border-top border-secondary">
+                {/* <div className="profile-header border-top border-secondary">
                 <h3 className="profile-title">Bank Details</h3>
               </div>
               <div className="profile-section">
@@ -373,180 +375,181 @@ const Profile = () => {
                   </Button>
                 </div>
               </div> */}
-            </Form>
-          </Card>
-        </Col>
-
-        <Col lg={4}>
-          <Card className="profile-card">
-            <div className="profile-header">
-              <h3 className="profile-title">Security</h3>
-            </div>
-            <div className="profile-section password-reset-section">
-              <h5 className="section-title">Change Password</h5>
-              <Form onSubmit={handlePasswordReset}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Current Password</Form.Label>
-                  <div className="password-input-wrapper position-relative">
-                    <Form.Control
-                      type={showOldPassword ? "text" : "password"}
-                      name="oldPassword"
-                      value={passwordData.oldPassword}
-                      onChange={handlePasswordChange}
-                      className="form-control-custom"
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="password-toggle-btn"
-                      onClick={() => setShowOldPassword(!showOldPassword)}
-                    >
-                      {showOldPassword ? (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                          <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                      ) : (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                          <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>New Password</Form.Label>
-                  <div className="password-input-wrapper position-relative">
-                    <Form.Control
-                      type={showNewPassword ? "text" : "password"}
-                      name="newPassword"
-                      value={passwordData.newPassword}
-                      onChange={handlePasswordChange}
-                      className="form-control-custom"
-                      required
-                      minLength={6}
-                    />
-                    <button
-                      type="button"
-                      className="password-toggle-btn"
-                      onClick={() => setShowNewPassword(!showNewPassword)}
-                    >
-                      {showNewPassword ? (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                          <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                      ) : (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                          <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                </Form.Group>
-                <Form.Group className="mb-4">
-                  <Form.Label>Confirm New Password</Form.Label>
-                  <div className="password-input-wrapper position-relative">
-                    <Form.Control
-                      type={showConfirmPassword ? "text" : "password"}
-                      name="confirmNewPassword"
-                      value={passwordData.confirmNewPassword}
-                      onChange={handlePasswordChange}
-                      className="form-control-custom"
-                      required
-                      minLength={6}
-                    />
-                    <button
-                      type="button"
-                      className="password-toggle-btn"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                    >
-                      {showConfirmPassword ? (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                          <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                      ) : (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                          <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                      )}
-                    </button>
-                  </div>
-                </Form.Group>
-
-                <Button
-                  type="submit"
-                  className="btn-update w-100"
-                  disabled={passwordUpdating}
-                >
-                  {passwordUpdating ? "Updating..." : "Update Password"}
-                </Button>
               </Form>
-            </div>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+            </Card>
+          </Col>
+
+          <Col lg={4}>
+            <Card className="profile-card">
+              <div className="profile-header">
+                <h3 className="profile-title">Security</h3>
+              </div>
+              <div className="profile-section password-reset-section">
+                <h5 className="section-title">Change Password</h5>
+                <Form onSubmit={handlePasswordReset}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Current Password</Form.Label>
+                    <div className="password-input-wrapper position-relative">
+                      <Form.Control
+                        type={showOldPassword ? "text" : "password"}
+                        name="oldPassword"
+                        value={passwordData.oldPassword}
+                        onChange={handlePasswordChange}
+                        className="form-control-custom"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() => setShowOldPassword(!showOldPassword)}
+                      >
+                        {showOldPassword ? (
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                          </svg>
+                        ) : (
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>New Password</Form.Label>
+                    <div className="password-input-wrapper position-relative">
+                      <Form.Control
+                        type={showNewPassword ? "text" : "password"}
+                        name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        className="form-control-custom"
+                        required
+                        minLength={6}
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                      >
+                        {showNewPassword ? (
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                          </svg>
+                        ) : (
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </Form.Group>
+                  <Form.Group className="mb-4">
+                    <Form.Label>Confirm New Password</Form.Label>
+                    <div className="password-input-wrapper position-relative">
+                      <Form.Control
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmNewPassword"
+                        value={passwordData.confirmNewPassword}
+                        onChange={handlePasswordChange}
+                        className="form-control-custom"
+                        required
+                        minLength={6}
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      >
+                        {showConfirmPassword ? (
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                          </svg>
+                        ) : (
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </Form.Group>
+
+                  <Button
+                    type="submit"
+                    className="btn-update w-100"
+                    disabled={passwordUpdating}
+                  >
+                    {passwordUpdating ? "Updating..." : "Update Password"}
+                  </Button>
+                </Form>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

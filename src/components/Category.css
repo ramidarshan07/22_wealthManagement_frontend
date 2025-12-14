@@ -1,9 +1,7 @@
 .category-container {
-  background: linear-gradient(
-    135deg,
-    var(--primary-black) 0%,
-    var(--secondary-black) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--primary-black) 0%,
+      var(--secondary-black) 100%);
   min-height: calc(100vh - 60px);
   margin-left: 250px;
   padding-top: 2rem;
@@ -45,7 +43,7 @@
 
 .category-search-input:focus {
   background-color: rgba(10, 10, 10, 0.9);
-  border-color: var(--accent-orange);
+  border-color: var(--accent-green);
   box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
   color: var(--text-light);
 }
@@ -68,22 +66,19 @@
   margin: 0;
   display: inline-flex;
   width: fit-content;
-  background: linear-gradient(
-    135deg,
-    var(--text-light) 0%,
-    var(--accent-orange) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--text-light) 0%,
+      var(--accent-green) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .add-button {
-  background: linear-gradient(
-    135deg,
-    var(--accent-orange) 0%,
-    var(--accent-orange-dark) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--accent-green) 0%,
+      var(--accent-green-dark) 100%);
   border: none;
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
@@ -99,11 +94,9 @@
 }
 
 .add-button:hover {
-  background: linear-gradient(
-    135deg,
-    var(--accent-orange-dark) 0%,
-    var(--accent-orange) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--accent-green-dark) 0%,
+      var(--accent-green) 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
 }
@@ -197,7 +190,7 @@
 
 .edit-button:hover {
   background-color: rgba(57, 255, 20, 0.2);
-  border-color: var(--accent-orange);
+  border-color: var(--accent-green);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
 }
@@ -237,7 +230,7 @@
 
 .status-toggle.active {
   background-color: rgba(57, 255, 20, 0.2);
-  border-color: var(--accent-orange);
+  border-color: var(--accent-green);
 }
 
 .status-toggle.inactive {
@@ -250,7 +243,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: var(--accent-orange);
+  background-color: var(--accent-green);
   transition: all 0.3s ease;
   left: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -274,7 +267,7 @@
 }
 
 .status-toggle.active .status-text {
-  color: var(--accent-orange);
+  color: var(--accent-green);
 }
 
 .status-toggle.inactive .status-text {
@@ -302,11 +295,9 @@
 .modal-header .modal-title {
   color: var(--text-light);
   font-weight: 700;
-  background: linear-gradient(
-    135deg,
-    var(--text-light) 0%,
-    var(--accent-orange) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--text-light) 0%,
+      var(--accent-green) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -343,7 +334,7 @@
 
 .category-modal .form-control-custom:focus {
   background-color: rgba(10, 10, 10, 0.9);
-  border-color: var(--accent-orange);
+  border-color: var(--accent-green);
   box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
   color: var(--text-light);
   outline: none;
@@ -378,11 +369,9 @@
 }
 
 .save-button {
-  background: linear-gradient(
-    135deg,
-    var(--accent-orange) 0%,
-    var(--accent-orange-dark) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--accent-green) 0%,
+      var(--accent-green-dark) 100%);
   border: none;
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
@@ -393,11 +382,9 @@
 }
 
 .save-button:hover:not(:disabled) {
-  background: linear-gradient(
-    135deg,
-    var(--accent-orange-dark) 0%,
-    var(--accent-orange) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--accent-green-dark) 0%,
+      var(--accent-green) 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
 }

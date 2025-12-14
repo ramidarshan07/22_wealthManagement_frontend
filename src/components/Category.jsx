@@ -261,7 +261,7 @@ function Category() {
     <div className="category-container">
       <Container fluid className="category-content">
         <div className="category-header">
-          <p className="account-eyebrow">PERSONAL LEDGER</p>
+          <p className="account-eyebrow">MANAGE CATEGORIES</p>
           <h1 className="category-title">CATEGORY</h1>
 
           <div className="category-toolbar">

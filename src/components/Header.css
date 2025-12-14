@@ -22,9 +22,9 @@
 }
 
 .profile-item:hover {
-  color: var(--accent-orange);
+  color: var(--accent-green);
   background-color: rgba(57, 255, 20, 0.1);
-  border-left: 2px solid var(--accent-orange);
+  border-left: 2px solid var(--accent-green);
 }
 
 .header-left {
@@ -46,7 +46,7 @@
 
 .mobile-sidebar-toggle:hover {
   background-color: rgba(57, 255, 20, 0.1);
-  color: var(--accent-orange);
+  color: var(--accent-green);
 }
 
 .mobile-sidebar-toggle:active {
@@ -74,8 +74,7 @@
   font-weight: 900;
   font-size: 1.8rem;
   margin: 0;
-  background: linear-gradient(135deg, #c5ff69 0%, #d4ff00 100%);
-  /* background: linear-gradient(135deg, var(--text-light) 0%, #6d0000 100%); */
+  background: linear-gradient(135deg, #cdff7d 0%, #d4ff00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -107,7 +106,7 @@
 }
 
 .profile-toggle:hover {
-  border-color: var(--accent-orange);
+  border-color: var(--accent-green);
   transform: scale(1.2);
 }
 
@@ -151,7 +150,7 @@
 }
 
 .logout-button:hover {
-  border-color: var(--accent-orange);
+  border-color: var(--accent-green);
   transform: translateY(-2px);
 }
 

@@ -28,10 +28,11 @@
     font-weight: 700;
     font-size: 2rem;
     margin: 0;
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-orange) 100%);
+    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .total-balance-badge {
@@ -54,7 +55,7 @@
 }
 
 .balance-value {
-    color: var(--accent-orange);
+    color: var(--accent-green);
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -104,7 +105,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-orange);
+    color: var(--accent-green);
     flex-shrink: 0;
 }
 
@@ -126,7 +127,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin: 0;
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-orange) 100%);
+    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -141,7 +142,7 @@
     font-weight: 700;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-orange) 100%);
+    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -183,7 +184,7 @@
 
 .quick-action-btn svg,
 .quick-action-btn span {
-    color: var(--accent-orange);
+    color: var(--accent-green);
 }
 
 .payment-methods-grid {
@@ -242,7 +243,7 @@
 }
 
 .pm-balance-value {
-    color: var(--accent-orange);
+    color: var(--accent-green);
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -296,7 +297,7 @@
 .modal-header .modal-title {
     color: var(--text-light);
     font-weight: 700;
-    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-orange) 100%);
+    background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-green) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -333,7 +334,7 @@
 
 .balance-modal .form-control-custom:focus {
     background-color: rgba(10, 10, 10, 0.9);
-    border-color: var(--accent-orange);
+    border-color: var(--accent-green);
     box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
     color: var(--text-light);
     outline: none;
@@ -363,7 +364,7 @@
 }
 
 .save-button {
-    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-dark) 100%);
+    background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-green-dark) 100%);
     border: none;
     border-radius: 8px;
     padding: 0.75rem 1.5rem;
@@ -374,7 +375,7 @@
 }
 
 .save-button:hover:not(:disabled) {
-    background: linear-gradient(135deg, var(--accent-orange-dark) 0%, var(--accent-orange) 100%);
+    background: linear-gradient(135deg, var(--accent-green-dark) 0%, var(--accent-green) 100%);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4);
 }

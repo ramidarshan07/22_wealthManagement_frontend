@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Container, Card, Modal, Form, Button, Alert } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Modal,
+  Form,
+  Button,
+  Alert,
+  Spinner,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Dashboard.css";
@@ -13,6 +21,7 @@ function Dashboard() {
   const [balanceInput, setBalanceInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isFetchingData, setIsFetchingData] = useState(true);
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
@@ -122,6 +131,8 @@ function Dashboard() {
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
       toast.error("Error fetching dashboard data");
+    } finally {
+      setIsFetchingData(false);
     }
   };
 
@@ -207,36 +218,44 @@ function Dashboard() {
         </div>
 
         <div className="payment-methods-section">
-          <div className="payment-methods-grid">
-            {paymentMethods
-              .filter((pm) => pm.status === "active")
-              .map((paymentMethod) => {
-                const balance = paymentMethodBalances.find(
-                  (b) => b.paymentMethodId === paymentMethod._id
-                ) || {
-                  balance: 0,
-                  credit: 0,
-                  debit: 0,
-                  name: paymentMethod.name,
-                };
-                return (
-                  <Card
-                    key={paymentMethod._id}
-                    className="payment-method-card"
-                    onDoubleClick={() => handleDoubleClick(paymentMethod)}
-                    title="Double-click to update balance"
-                  >
-                    <Card.Body>
-                      <div className="pm-card-header">
-                        <h4 className="pm-name">{paymentMethod.name}</h4>
-                      </div>
-                      <div className="pm-balance">
-                        <span className="pm-balance-label">Balance:</span>
-                        <span className="pm-balance-value">
-                          ₹ {balance.balance.toFixed(2)}
-                        </span>
-                      </div>
-                      {/* <div className="pm-stats">
+          {isFetchingData ? (
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ minHeight: "100px", width: "100%" }}
+            >
+              <Spinner animation="border" variant="success" />
+            </div>
+          ) : (
+            <div className="payment-methods-grid">
+              {paymentMethods
+                .filter((pm) => pm.status === "active")
+                .map((paymentMethod) => {
+                  const balance = paymentMethodBalances.find(
+                    (b) => b.paymentMethodId === paymentMethod._id
+                  ) || {
+                    balance: 0,
+                    credit: 0,
+                    debit: 0,
+                    name: paymentMethod.name,
+                  };
+                  return (
+                    <Card
+                      key={paymentMethod._id}
+                      className="payment-method-card"
+                      onDoubleClick={() => handleDoubleClick(paymentMethod)}
+                      title="Double-click to update balance"
+                    >
+                      <Card.Body>
+                        <div className="pm-card-header">
+                          <h4 className="pm-name">{paymentMethod.name}</h4>
+                        </div>
+                        <div className="pm-balance">
+                          <span className="pm-balance-label">Balance:</span>
+                          <span className="pm-balance-value">
+                            ₹ {balance.balance.toFixed(2)}
+                          </span>
+                        </div>
+                        {/* <div className="pm-stats">
                         <div className="pm-stat">
                           <span className="pm-stat-label">Credit:</span>
                           <span className="pm-stat-value credit">
@@ -250,11 +269,12 @@ function Dashboard() {
                           </span>
                         </div>
                       </div> */}
-                    </Card.Body>
-                  </Card>
-                );
-              })}
-          </div>
+                      </Card.Body>
+                    </Card>
+                  );
+                })}
+            </div>
+          )}
         </div>
 
         <div className="quick-actions-section">
