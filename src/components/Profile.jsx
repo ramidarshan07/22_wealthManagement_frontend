@@ -267,114 +267,125 @@ const Profile = () => {
                   </Row>
                 </div>
 
-                {/* <div className="profile-header border-top border-secondary">
-                <h3 className="profile-title">Bank Details</h3>
-              </div>
-              <div className="profile-section">
-                <Row>
-                  <Col md={12} className="mb-3">
-                    <Form.Label>QR Code</Form.Label>
-                    <Form.Control
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="form-control-custom"
-                    />
-                    {qrcodePreview && (
-                      <div className="mt-3">
-                        <label className="d-block mb-2 text-muted">
-                          Preview:
-                        </label>
-                        <img
-                          src={qrcodePreview}
-                          alt="QR Code Preview"
-                          style={{
-                            maxWidth: "200px",
-                            borderRadius: "8px",
-                            border: "1px solid #444",
-                          }}
-                        />
-                      </div>
-                    )}
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Account Holder Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="bankDetails.accountName"
-                      value={userData.bankDetails.accountName || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="Name on bank account"
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Account Number</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="bankDetails.accountNumber"
-                      value={userData.bankDetails.accountNumber || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="Account Number"
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Bank Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="bankDetails.bankName"
-                      value={userData.bankDetails.bankName || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="Bank Name"
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>IFSC Code</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="bankDetails.ifscCode"
-                      value={userData.bankDetails.ifscCode || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="IFSC Code"
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>Branch Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="bankDetails.branchName"
-                      value={userData.bankDetails.branchName || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="Branch Name"
-                    />
-                  </Col>
-                  <Col md={6} className="mb-3">
-                    <Form.Label>UPI ID</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="upiId"
-                      value={userData.upiId || ""}
-                      onChange={handleUserChange}
-                      className="form-control-custom"
-                      placeholder="Enter UPI ID"
-                    />
-                  </Col>
-                </Row>*/}
-
-                <div className="mt-4 d-flex justify-content-end">
-                  <Button
-                    type="submit"
-                    className="btn-update"
-                    disabled={updating}
-                  >
-                    {updating ? "Saving..." : "Save Profile Details"}
-                  </Button>
+                <div className="profile-header border-top border-success">
+                  <h3 className="profile-title">Bank Details</h3>
                 </div>
-                {/* </div>  */}
+                <div className="profile-section">
+                  <Row>
+                    <Col md={12} className="mb-3">
+                      <Form.Label>QR Code</Form.Label>
+                      <div className="row my-3">
+                        {qrcodePreview && (
+                          <div className="col-md-8">
+                            <img
+                              src={qrcodePreview}
+                              alt="QR Code Preview"
+                              style={{
+                                maxWidth: "200px",
+                                borderRadius: "8px",
+                                border: "1px solid #444",
+                              }}
+                            />
+                          </div>
+                        )}
+                        <div className="col-md-4 d-flex align-items-center">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            id="qrcode-upload"
+                            onChange={handleFileChange}
+                            className="d-none"
+                          />
+                          <label
+                            htmlFor="qrcode-upload"
+                            className="btn-upload me-2 mb-0"
+                          >
+                            Choose File
+                          </label>
+                          <span className="file-name">
+                            {qrcode ? qrcode.name : "No file chosen"}
+                          </span>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Account Holder Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="bankDetails.accountName"
+                        value={userData.bankDetails.accountName || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="Name on bank account"
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Account Number</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="bankDetails.accountNumber"
+                        value={userData.bankDetails.accountNumber || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="Account Number"
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Bank Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="bankDetails.bankName"
+                        value={userData.bankDetails.bankName || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="Bank Name"
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>IFSC Code</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="bankDetails.ifscCode"
+                        value={userData.bankDetails.ifscCode || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="IFSC Code"
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>Branch Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="bankDetails.branchName"
+                        value={userData.bankDetails.branchName || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="Branch Name"
+                      />
+                    </Col>
+                    <Col md={6} className="mb-3">
+                      <Form.Label>UPI ID</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="upiId"
+                        value={userData.upiId || ""}
+                        onChange={handleUserChange}
+                        className="form-control-custom"
+                        placeholder="Enter UPI ID"
+                      />
+                    </Col>
+                  </Row>
+
+                  <div className="mt-4 d-flex justify-content-end">
+                    <Button
+                      type="submit"
+                      className="btn-update"
+                      disabled={updating}
+                    >
+                      {updating ? "Saving..." : "Save Profile Details"}
+                    </Button>
+                  </div>
+                </div>
               </Form>
             </Card>
           </Col>

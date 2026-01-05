@@ -11,6 +11,7 @@ import Expense from "./components/Expense";
 import Saving from "./components/Saving";
 import Account from "./components/Account";
 import Profile from "./components/Profile";
+import Notes from "./components/Notes";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="saving" element={<Saving />} />
           <Route path="account" element={<Account />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="notes" element={<Notes />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
