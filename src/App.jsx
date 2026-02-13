@@ -13,6 +13,10 @@ import Account from "./components/Account";
 import Profile from "./components/Profile";
 import Notes from "./components/Notes";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Games from "./components/Games";
+import Game2048 from "./components/Game2048";
+import SnakeGame from "./components/SnakeGame";
+import TicTacToe from "./components/TicTacToe";
 import "./App.css";
 
 function App() {
@@ -39,7 +43,14 @@ function App() {
           <Route path="account" element={<Account />} />
           <Route path="profile" element={<Profile />} />
           <Route path="notes" element={<Notes />} />
+          <Route path="games" element={<Games />} />
         </Route>
+
+        {/* Full Screen Game Routes */}
+        <Route path="/game/2048" element={<Game2048 />} />
+        <Route path="/game/snake" element={<SnakeGame />} />
+        <Route path="/game/tictactoe" element={<TicTacToe />} />
+
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
       <ToastContainer

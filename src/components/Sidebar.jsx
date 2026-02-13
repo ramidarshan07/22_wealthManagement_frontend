@@ -160,6 +160,28 @@ function Sidebar({ isMobileSidebarOpen, closeMobileSidebar }) {
       path: "/notes",
     },
     {
+      id: "games",
+      label: "Games",
+      icon: (
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <path d="M6 12h4m-2-2v4"></path>
+          <circle cx="17" cy="11" r="1"></circle>
+          <circle cx="15" cy="13" r="1"></circle>
+        </svg>
+      ),
+      path: "/games",
+    },
+    {
       id: "profile",
       label: "Profile",
       icon: (
