@@ -47,9 +47,9 @@ function App() {
         </Route>
 
         {/* Full Screen Game Routes */}
-        <Route path="/game/2048" element={<Game2048 />} />
-        <Route path="/game/snake" element={<SnakeGame />} />
-        <Route path="/game/tictactoe" element={<TicTacToe />} />
+        <Route path="/games/2048" element={<Game2048 />} />
+        <Route path="/games/snake" element={<SnakeGame />} />
+        <Route path="/games/tictactoe" element={<TicTacToe />} />
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>

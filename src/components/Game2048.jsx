@@ -60,6 +60,54 @@ export default function Game2048() {
     }
   };
 
+  const playSound = (type) => {
+    if (!soundEnabled) return;
+    try {
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") ctx.resume();
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      const now = ctx.currentTime;
+
+      if (type === "move") {
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } else if (type === "merge") {
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+      } else if (type === "gameover") {
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(50, now + 0.5);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      } else if (type === "win") {
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.2);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.4);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }
+    } catch (e) {
+      console.warn("Audio context not allowed yet");
+    }
+  };
+
   const move = (direction) => {
     if (isPaused || isGameOver || (hasWon && !keepPlaying)) return;
 
@@ -67,6 +115,7 @@ export default function Game2048() {
       row.map((cell) => (cell ? { ...cell } : null)),
     );
     let moved = false;
+    let merged = false;
     let newScore = score;
 
     const rotate = (g) => g[0].map((_, i) => g.map((row) => row[i]));
@@ -89,7 +138,11 @@ export default function Game2048() {
         if (arr[i].value === arr[i + 1].value) {
           arr[i].value *= 2;
           newScore += arr[i].value;
-          if (arr[i].value === 2048) setHasWon(true);
+          merged = true;
+          if (arr[i].value === 2048) {
+            setHasWon(true);
+            playSound("win");
+          }
           arr.splice(i + 1, 1);
         }
       }
@@ -119,6 +172,12 @@ export default function Game2048() {
       setGrid(working);
       setScore(newScore);
 
+      if (merged) {
+        playSound("merge");
+      } else {
+        playSound("move");
+      }
+
       if (newScore > bestScore) {
         setBestScore(newScore);
         localStorage.setItem("2048_best", newScore);
@@ -128,6 +187,7 @@ export default function Game2048() {
       if (checkGameOver(grid)) {
         setIsGameOver(true);
         setCountdown(5);
+        playSound("gameover");
       }
     }
 
@@ -140,6 +200,7 @@ export default function Game2048() {
       if (checkGameOver(working)) {
         setIsGameOver(true);
         setCountdown(5);
+        playSound("gameover");
       }
     }
   };
@@ -204,6 +265,32 @@ export default function Game2048() {
 
   return (
     <div className="game-2048-wrapper">
+      <div className="game-nav-controls">
+        <button
+          className="back-btn-2048"
+          onClick={() => (window.location.href = "/games")}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
+        <button
+          className="sound-toggle-game2048"
+          onClick={() => setSoundEnabled((s) => !s)}
+        >
+          {soundEnabled ? "🔊" : "🔇"}
+        </button>
+      </div>
       <div className="header-2048">
         <h1>2048</h1>
         <div className="scores-container-2048">
@@ -250,7 +337,10 @@ export default function Game2048() {
         {isGameOver && (
           <div className="game-over-overlay">
             <h2>Game Over</h2>
-            <p>Restarting in {countdown}s</p>
+            <h3>
+              You Scored: <strong>{score}</strong>
+            </h3>
+            <p>Back in action in {countdown}s...</p>
           </div>
         )}
       </div>

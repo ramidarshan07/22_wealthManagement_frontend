@@ -1,0 +1,314 @@
+.ticTacToe-wrapper {
+  min-height: 100vh;
+  background-color: #181818;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e6edf3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.game-nav-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  z-index: 100;
+}
+
+.sound-toggle-tic,
+.back-btn-tic {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.sound-toggle-tic {
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.sound-toggle-tic:hover,
+.back-btn-tic:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #00ff00;
+  color: #00ff00;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+}
+
+.game-box-tic {
+  background-color: #111;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+  border: 1px solid #333;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.game-box-tic h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.form-select-tic {
+  background-color: #1a1a1a;
+  color: #00ff00;
+  border: 1px solid #333;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  transition: border-color 0.3s;
+}
+
+.form-select-tic:focus {
+  border-color: #00ff00;
+}
+
+.score-box-tic {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.score-box-tic small {
+  display: block;
+  font-weight: 700;
+  color: #8b949e;
+  margin-bottom: 5px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score-box-tic div {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #00ff00;
+}
+
+#turnInfo {
+  color: #8b949e;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.board-tic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px auto;
+  max-width: 300px;
+  position: relative;
+}
+
+.winning-line {
+  position: absolute;
+  background-color: #fff;
+  z-index: 5;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #fff, 0 0 40px rgba(255, 255, 255, 0.5);
+  --rotate: 0deg;
+  animation: drawLine 0.5s ease-out forwards;
+  transform-origin: center;
+}
+
+@keyframes drawLine {
+  from { transform: scaleX(0) rotate(var(--rotate)); opacity: 0; }
+  to { transform: scaleX(1) rotate(var(--rotate)); opacity: 1; }
+}
+
+/* Horizontal Lines */
+.h-top, .h-mid, .h-bot {
+  height: 6px;
+  width: 100%;
+  left: 0;
+}
+.h-top { top: calc(16.66% - 3px); }
+.h-mid { top: calc(50% - 3px); }
+.h-bot { top: calc(83.33% - 3px); }
+
+/* Vertical Lines */
+.v-left, .v-mid, .v-right {
+  width: 6px;
+  height: 100%;
+  top: 0;
+  --rotate: 90deg; /* Rotate a horizontal-like line base if we want uniform animation, 
+                     but currently these are already vertical. 
+                     Let's make them uniform for the animation to look consistent. */
+}
+
+/* Redefining Vertical to use same base as horizontal for better animation */
+.v-left, .v-mid, .v-right {
+  height: 6px;
+  width: 100%;
+  left: 50%;
+  top: 50%;
+  --rotate: 90deg;
+  margin-left: -50%;
+}
+.v-left { left: 16.66%; }
+.v-mid { left: 50%; }
+.v-right { left: 83.33%; }
+
+/* Diagonal Lines */
+.d-main {
+  height: 6px;
+  width: 125%;
+  top: 50%;
+  left: 50%;
+  margin-left: -62.5%;
+  --rotate: 45deg;
+}
+.d-anti {
+  height: 6px;
+  width: 125%;
+  top: 50%;
+  left: 50%;
+  margin-left: -62.5%;
+  --rotate: -45deg;
+}
+
+.cell.won {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  transform: scale(1.02);
+}
+
+@media (max-width: 600px) {
+  .ticTacToe-wrapper {
+    padding: 10px;
+    justify-content: flex-start;
+    padding-top: 80px;
+  }
+
+  .game-box-tic {
+    padding: 20px;
+    width: 95%;
+  }
+
+  .game-box-tic h1 {
+    font-size: 1.8rem;
+  }
+
+  .board-tic {
+    max-width: 260px;
+    gap: 10px;
+  }
+
+  .cell {
+    font-size: 2rem;
+  }
+
+  .game-nav-controls {
+    top: 10px;
+    right: 10px;
+  }
+
+  .back-btn-tic {
+    padding: 8px 15px;
+    font-size: 0.75rem;
+  }
+
+  .btn-tic {
+    width: 100% !important;
+  }
+}
+
+.cell {
+  background-color: #1a1a1a;
+  border: 2px solid #333;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  color: #fff;
+}
+
+.cell:hover {
+  background-color: #222;
+  border-color: #00ff00;
+  transform: scale(1.05);
+}
+
+.cell:empty:hover {
+  border-color: rgba(0, 255, 0, 0.5);
+}
+
+.cell.x {
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.cell.o {
+  color: #ff3366;
+  text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+}
+
+.status-tic {
+  margin: 20px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00ff00;
+  min-height: 1.5rem;
+}
+
+.btn-tic {
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-tic-neon {
+  background: transparent;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.btn-tic-neon:hover {
+  background-color: #00ff00;
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  transform: translateY(-2px);
+}

@@ -106,7 +106,8 @@
 }
 
 .profile-toggle:hover {
-  border-color: var(--accent-green);
+  background-color: rgba(57, 255, 20, 0.1);
+  color: var(--accent-green);
   transform: scale(1.2);
 }
 
@@ -186,5 +187,66 @@
   .header-container {
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+}
+
+/* Games Button in Header */
+.games-header-btn {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.games-header-btn:hover {
+  background-color: rgba(57, 255, 20, 0.1);
+  color: #FF6A00;
+  transform: scale(1.2);
+}
+
+.wave-animation {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ripple rings */
+.wave-animation::before,
+.wave-animation::after {
+  content: "";
+  position: absolute;
+
+  /* ripple origin */
+  top: 5%;
+  right: 9.5%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid rgba(57, 255, 20, 0.6);
+  transform: translate(50%, -50%) scale(0);
+  animation: rippleWave 1.2s ease-out forwards;
+}
+
+@keyframes rippleWave {
+  0% {
+    transform: translate(50%, -50%) scale(0.2);
+    opacity: 0.9;
+  }
+
+  60% {
+    opacity: 0.5;
+  }
+
+  100% {
+    /* scale enough to cover full screen */
+    transform: translate(50%, -50%) scale(90);
+    opacity: 0;
   }
 }

@@ -106,7 +106,7 @@ function Expense() {
       filtered = filtered.filter(
         (expense) =>
           expense.category?._id === filters.category ||
-          expense.category === filters.category
+          expense.category === filters.category,
       );
     }
 
@@ -143,7 +143,7 @@ function Expense() {
       filtered = filtered.filter(
         (expense) =>
           expense.paymentMethod?._id === filters.paymentMethod ||
-          expense.paymentMethod === filters.paymentMethod
+          expense.paymentMethod === filters.paymentMethod,
       );
     }
 
@@ -159,6 +159,16 @@ function Expense() {
       name.toLowerCase().includes("income")
     );
   };
+
+  const totalCredit = filteredExpenses.reduce((acc, expense) => {
+    return acc + (isCreditType(expense.amountType) ? expense.amount : 0);
+  }, 0);
+
+  const totalDebit = filteredExpenses.reduce((acc, expense) => {
+    return acc + (!isCreditType(expense.amountType) ? expense.amount : 0);
+  }, 0);
+
+  const netTotal = totalCredit - totalDebit;
 
   const fetchCategories = async () => {
     try {
@@ -331,7 +341,7 @@ function Expense() {
         toast.success(
           editingExpense
             ? "Expense updated successfully"
-            : "Expense created successfully"
+            : "Expense created successfully",
         );
         handleCloseExpenseModal();
         await fetchExpenses();
@@ -497,7 +507,7 @@ function Expense() {
   const filteredCategoryOptions =
     normalizedCategorySearch && !shouldShowAllCategories
       ? activeCategories.filter((cat) =>
-          (cat.name || "").toLowerCase().includes(normalizedCategorySearch)
+          (cat.name || "").toLowerCase().includes(normalizedCategorySearch),
         )
       : activeCategories;
 
@@ -726,6 +736,23 @@ function Expense() {
                 })
               )}
             </tbody>
+            {filteredExpenses.length > 0 && (
+              <tfoot className="total-row-section">
+                <tr className="total-row">
+                  <td colSpan="3" className="text-end total-label">
+                    Total
+                  </td>
+                  <td className="credit-amount">₹ {totalCredit.toFixed(2)}</td>
+                  <td className="debit-amount">₹ {totalDebit.toFixed(2)}</td>
+                  <td
+                    colSpan="2"
+                    className={`net-total-amount ${netTotal >= 0 ? "net-total-positive" : "net-total-negative"}`}
+                  >
+                    Balance: ₹ {netTotal.toFixed(2)}
+                  </td>
+                </tr>
+              </tfoot>
+            )}
           </Table>
         </div>
 

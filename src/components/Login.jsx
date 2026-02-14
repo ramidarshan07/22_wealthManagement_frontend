@@ -334,12 +334,12 @@ function Login() {
                     {loading
                       ? "Processing..."
                       : isLogin
-                      ? "Sign In"
-                      : "Sign Up"}
+                        ? "Sign In"
+                        : "Sign Up"}
                   </Button>
                 </Form>
 
-                {/* <div className="text-center">
+                {/* <div className="text-center"> 
                   <button
                     type="button"
                     className="toggle-button"

@@ -1,4 +1,3 @@
-import React from "react";
 import "./Games.css";
 
 const Games = () => {
@@ -8,7 +7,7 @@ const Games = () => {
       title: "2048",
       description:
         "Join the numbers and get to the 2048 tile! A classic puzzle game.",
-      path: "/game/2048",
+      path: "/games/2048",
       color: "#edc22e",
       image: "/2048 (1).png",
     },
@@ -17,7 +16,7 @@ const Games = () => {
       title: "Snake Game",
       description:
         "Navigate the snake to eat food. Don't hit the walls or yourself!",
-      path: "/game/snake",
+      path: "/games/snake",
       color: "#4CAF50",
       image: "/snakegame.png",
     },
@@ -25,20 +24,20 @@ const Games = () => {
       id: "tictactoe",
       title: "Tic Tac Toe",
       description: "Challenge the AI in this classic game of X and O.",
-      path: "/game/tictactoe",
+      path: "/games/tictactoe",
       color: "#2196F3",
       image: "/tic-tac-toelogo.png",
     },
   ];
 
   const handleGameClick = (path) => {
-    window.open(path, "_blank");
+    window.location.href = path;
   };
 
   return (
     <div className="games-container">
       <p className="account-eyebrow">ENTERTAINMENT ZONE</p>
-      <h1 className="game-title">Game Arcade</h1>
+      <h1 className="game-title">Game Arena</h1>
       <div className="games-grid mt-3">
         {games.map((game) => (
           <div

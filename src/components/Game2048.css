@@ -31,6 +31,47 @@
     z-index: 9999;
 }
 
+.game-nav-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 10000;
+}
+
+.sound-toggle-game2048,
+.back-btn-2048 {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.sound-toggle-2048 {
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.sound-toggle-game2048:hover,
+.back-btn-2048:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--g2048-neon-green);
+    color: var(--g2048-neon-green);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(10, 255, 10, 0.2);
+}
+
 .header-2048 {
     display: flex;
     justify-content: space-between;
@@ -264,13 +305,63 @@
 /* Media query for smaller screens */
 @media (max-width: 600px) {
     :root {
-        --g2048-grid-size: 300px;
-        --g2048-tile-size: 60px;
-        --g2048-gap-size: 10px;
+        --g2048-grid-size: 340px;
+        --g2048-tile-size: 68px;
+        --g2048-gap-size: 12px;
+    }
+
+    .game-2048-wrapper {
+        padding: 10px;
+        justify-content: flex-start;
+        padding-top: 80px;
+    }
+
+    .header-2048 {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        max-width: var(--g2048-grid-size);
+        margin-bottom: 1.5rem;
     }
 
     .header-2048 h1 {
         font-size: 2.5rem;
+    }
+
+    .scores-container-2048 {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .game-over-overlay h2 {
+        font-size: 2.5rem;
+    }
+
+    .game-nav-controls {
+        top: 10px;
+        right: 10px;
+    }
+
+    .back-btn-2048 {
+        padding: 8px 15px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 400px) {
+    :root {
+        --g2048-grid-size: 280px;
+        --g2048-tile-size: 55px;
+        --g2048-gap-size: 10px;
+    }
+
+    .score-box-2048 {
+        padding: 0.5rem 1rem;
+        min-width: 70px;
+    }
+
+    .score-val-2048 {
+        font-size: 1.2rem;
     }
 }
 

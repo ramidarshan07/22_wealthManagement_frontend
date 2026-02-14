@@ -505,3 +505,40 @@
     justify-content: center;
   }
 }
+
+.total-row {
+  border-bottom: 1px solid rgba(55, 255, 20, 0.219) !important;
+  font-weight: 700 !important;
+}
+
+.total-row td {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  padding: 1.25rem 1rem !important;
+  color: var(--text-light) !important;
+  vertical-align: middle !important;
+}
+
+.total-label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  color: var(--accent-green) !important;
+}
+
+.net-total-amount {
+  font-size: 1rem;
+  text-align: right;
+  padding-right: 2rem !important;
+}
+
+.net-total-positive {
+  color: #28a745 !important;
+}
+
+.net-total-negative {
+  color: #dc3545 !important;
+}
+
+.total-row-section {
+  border-top: 2px solid rgba(57, 255, 20, 0.2);
+}
