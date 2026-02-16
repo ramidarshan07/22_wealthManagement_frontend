@@ -25,6 +25,12 @@ export default function SnakeGame() {
   const dyRef = useRef(-1);
   const nextDxRef = useRef(0);
   const nextDyRef = useRef(-1);
+  const isPausedRef = useRef(false);
+
+  // Sync isPaused state with ref for the game loop
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
 
   const audioCtxRef = useRef(null);
 
@@ -158,6 +164,7 @@ export default function SnakeGame() {
   };
 
   const update = () => {
+    if (isPausedRef.current) return;
     let snake = snakeRef.current;
 
     if (
