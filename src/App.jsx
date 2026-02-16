@@ -17,6 +17,7 @@ import Games from "./components/Games";
 import Game2048 from "./components/Game2048";
 import SnakeGame from "./components/SnakeGame";
 import TicTacToe from "./components/TicTacToe";
+import Error from "./components/Error";
 import "./App.css";
 
 function App() {
@@ -44,14 +45,12 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="notes" element={<Notes />} />
           <Route path="games" element={<Games />} />
+          <Route path="games/2048" element={<Game2048 />} />
+          <Route path="games/snake" element={<SnakeGame />} />
+          <Route path="games/tictactoe" element={<TicTacToe />} />
         </Route>
 
-        {/* Full Screen Game Routes */}
-        <Route path="/games/2048" element={<Game2048 />} />
-        <Route path="/games/snake" element={<SnakeGame />} />
-        <Route path="/games/tictactoe" element={<TicTacToe />} />
-
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <ToastContainer
         position="top-right"
