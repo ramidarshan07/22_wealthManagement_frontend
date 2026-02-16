@@ -51,19 +51,55 @@ export default function SnakeGame() {
     return audioCtxRef.current;
   };
 
-  // High score handling
-  const getHighScoreKey = (diff) => `snakeHighScore_${diff}`;
+  const API_URL = import.meta.env.VITE_API_URL;
+  const [allHighScores, setAllHighScores] = useState({});
 
-  const loadHighScore = (diff) => {
-    const key = getHighScoreKey(diff);
-    const hs = localStorage.getItem(key) || 0;
-    setHighScore(Number(hs));
+  const fetchHighScores = async () => {
+    try {
+      const response = await fetch(`${API_URL}/snakegame/highscores`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAllHighScores(data.highScores || {});
+        setHighScore(data.highScores?.[difficulty] || 0);
+      }
+    } catch (error) {
+      console.error("Error fetching snake high scores:", error);
+    }
   };
 
-  // Initial load and difficulty change load
+  const saveHighScore = async (newScore, diff) => {
+    try {
+      const response = await fetch(`${API_URL}/snakegame/highscore`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ score: newScore, difficulty: diff }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAllHighScores(data.highScores || {});
+        setHighScore(data.highScores?.[diff] || 0);
+      }
+    } catch (error) {
+      console.error("Error saving snake high score:", error);
+    }
+  };
+
+  // Initial load
   useEffect(() => {
-    loadHighScore(difficulty);
-  }, [difficulty]);
+    fetchHighScores();
+  }, []);
+
+  // Update displayed high score when difficulty changes
+  useEffect(() => {
+    setHighScore(allHighScores[difficulty] || 0);
+  }, [difficulty, allHighScores]);
 
   const playSound = (type) => {
     if (!soundEnabled) return;
@@ -149,12 +185,8 @@ export default function SnakeGame() {
     clearInterval(loopRef.current);
     playSound("crash");
 
-    const key = getHighScoreKey(difficulty);
-    const existingHS = Number(localStorage.getItem(key) || 0);
-
-    if (scoreRef.current > existingHS) {
-      localStorage.setItem(key, scoreRef.current);
-      setHighScore(scoreRef.current);
+    if (scoreRef.current > highScore) {
+      saveHighScore(scoreRef.current, difficulty);
     }
   };
 

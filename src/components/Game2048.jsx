@@ -22,8 +22,46 @@ export default function Game2048() {
     audioCtxRef.current = new (
       window.AudioContext || window.webkitAudioContext
     )();
+    fetchHighScore();
     initGame();
   }, []);
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const fetchHighScore = async () => {
+    try {
+      const response = await fetch(`${API_URL}/game2048/highscore`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (data.success) {
+        setBestScore(data.highScore);
+      }
+    } catch (error) {
+      console.error("Error fetching high score:", error);
+    }
+  };
+
+  const saveHighScore = async (newScore) => {
+    try {
+      const response = await fetch(`${API_URL}/game2048/highscore`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ score: newScore }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setBestScore(data.highScore);
+      }
+    } catch (error) {
+      console.error("Error saving high score:", error);
+    }
+  };
 
   const initGame = () => {
     const newGrid = Array(SIZE)
@@ -180,27 +218,22 @@ export default function Game2048() {
 
       if (newScore > bestScore) {
         setBestScore(newScore);
-        localStorage.setItem("2048_best", newScore);
       }
     } else {
-      // If no move was possible, check if game is over
       if (checkGameOver(grid)) {
         setIsGameOver(true);
         setCountdown(5);
         playSound("gameover");
+        saveHighScore(newScore);
       }
     }
 
-    // Also check game over after a successful move and random tile addition
     if (changed) {
-      // We need to check the NEW grid (working)
-      // ensure state update is processed or check against working directly
-      // passed 'working' to checkGameOver would be better but checkGameOver uses 'grid' state currently?
-      // No, I will define checkGameOver to accept a grid argument.
       if (checkGameOver(working)) {
         setIsGameOver(true);
         setCountdown(5);
         playSound("gameover");
+        saveHighScore(newScore);
       }
     }
   };
