@@ -190,12 +190,8 @@ export default function Game2048() {
 
     if (direction === "Up") {
       working = rotate(working);
-      working = rotate(working);
-      working = rotate(working);
     } else if (direction === "Down") {
       working = reverse(working);
-      working = rotate(working);
-      working = rotate(working);
       working = rotate(working);
     } else if (direction === "Right") {
       working = reverse(working);
@@ -294,7 +290,16 @@ export default function Game2048() {
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  });
+  }, [
+    grid,
+    isPaused,
+    isGameOver,
+    hasWon,
+    keepPlaying,
+    bestScore,
+    score,
+    soundEnabled,
+  ]);
 
   return (
     <div className="game-2048-wrapper">
