@@ -12,6 +12,7 @@ import Saving from "./components/Saving";
 import Account from "./components/Account";
 import Profile from "./components/Profile";
 import Notes from "./components/Notes";
+import Vehicle from "./components/Vehicle";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Games from "./components/Games";
 import Game2048 from "./components/Game2048";
@@ -44,6 +45,7 @@ function App() {
           <Route path="account" element={<Account />} />
           <Route path="profile" element={<Profile />} />
           <Route path="notes" element={<Notes />} />
+          <Route path="vehicle" element={<Vehicle />} />
           <Route path="games" element={<Games />} />
           <Route path="games/2048" element={<Game2048 />} />
           <Route path="games/snake" element={<SnakeGame />} />

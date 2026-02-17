@@ -37,7 +37,7 @@ const Games = () => {
   return (
     <div className="games-container">
       <p className="account-eyebrow">ENTERTAINMENT ZONE</p>
-      <h1 className="game-title">Game Arena</h1>
+      <h1 className="game-title">GAME ARENA</h1>
       <div className="games-grid mt-3">
         {games.map((game) => (
           <div
