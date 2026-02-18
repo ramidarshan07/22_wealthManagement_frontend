@@ -19,13 +19,16 @@ import Game2048 from "./components/Game2048";
 import SnakeGame from "./components/SnakeGame";
 import TicTacToe from "./components/TicTacToe";
 import Error from "./components/Error";
+import ClickWave from "./components/ClickWave";
 import "./App.css";
 
 function App() {
   return (
     <BrowserRouter>
+      <ClickWave />
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Login />} />
 
         <Route
           path="/"

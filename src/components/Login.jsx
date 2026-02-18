@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  const isLogin = location.pathname === "/login";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,19 +27,21 @@ function Login() {
       return;
     }
 
-    const savedEmail = localStorage.getItem("rememberedEmail");
-    const savedPassword = localStorage.getItem("rememberedPassword");
-    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
+    if (isLogin) {
+      const savedEmail = localStorage.getItem("rememberedEmail");
+      const savedPassword = localStorage.getItem("rememberedPassword");
+      const savedRememberMe = localStorage.getItem("rememberMe") === "true";
 
-    if (savedRememberMe && savedEmail && savedPassword) {
-      setFormData((prev) => ({
-        ...prev,
-        email: savedEmail,
-        password: savedPassword,
-      }));
-      setRememberMe(true);
+      if (savedRememberMe && savedEmail && savedPassword) {
+        setFormData((prev) => ({
+          ...prev,
+          email: savedEmail,
+          password: savedPassword,
+        }));
+        setRememberMe(true);
+      }
     }
-  }, [navigate]);
+  }, [navigate, isLogin]);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -339,25 +342,25 @@ function Login() {
                   </Button>
                 </Form>
 
-                <div className="text-center">
+                {/* <div className="text-center">
                   <button
                     type="button"
                     className="toggle-button"
                     onClick={() => {
-                      setIsLogin(!isLogin);
                       setFormData({
                         name: "",
                         email: "",
                         password: "",
                         confirmPassword: "",
                       });
+                      navigate(isLogin ? "/register" : "/login");
                     }}
                   >
                     {isLogin
                       ? "Don't have an account? Sign Up"
                       : "Already have an account? Sign In"}
                   </button>
-                </div>
+                </div> */}
               </Card.Body>
             </Card>
           </Col>

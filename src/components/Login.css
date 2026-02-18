@@ -12,22 +12,25 @@
     right: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(55, 255, 20, 0.134) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(55, 255, 20, 0.192) 0%, transparent 70%);
     animation: pulse 15s ease-in-out infinite;
 }
 
+.login-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(55, 255, 20, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55, 255, 20, 0.08) 1px, transparent 1px);
+    background-size: 40px 40px; /* Grid spacing */
+    pointer-events: none;
+}
+
 @keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.5;
-    }
-
-    50% {
-        transform: scale(1.1);
-        opacity: 0.8;
-    }
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 0.6; }
 }
 
 .login-card {
