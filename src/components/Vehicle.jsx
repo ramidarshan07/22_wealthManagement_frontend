@@ -342,6 +342,64 @@ function Vehicle() {
     });
   };
 
+  const calculateAge = (date) => {
+    if (!date) return "-";
+    const start = new Date(date);
+    const now = new Date();
+
+    let years = now.getFullYear() - start.getFullYear();
+    let months = now.getMonth() - start.getMonth();
+    let days = now.getDate() - start.getDate();
+
+    if (days < 0) {
+      months--;
+      const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      days += lastMonth.getDate();
+    }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    let ageParts = [];
+    if (years > 0) ageParts.push(`${years} ${years === 1 ? "year" : "years"}`);
+    if (months > 0) ageParts.push(`${months} month`);
+    if (days > 0) ageParts.push(`${days} days`);
+
+    return ageParts.join(" ") || "Today";
+  };
+
+  const getPerformanceStats = () => {
+    if (!selectedVehicle) return null;
+
+    const logs = [...(selectedVehicle.logs || [])].sort(
+      (a, b) => new Date(a.date) - new Date(b.date),
+    );
+
+    const totalKm = logs.length > 0 ? Math.max(...logs.map((l) => l.km)) : 0;
+    const age = calculateAge(selectedVehicle.purchaseDate);
+
+    let actualAverage = "N/A";
+    if (logs.length >= 2) {
+      const firstLog = logs[0];
+      const lastLog = logs[logs.length - 1];
+      const totalDistance = lastLog.km - firstLog.km;
+
+      // Fuel added from the first log up to the second-to-last log
+      const totalFuel = logs
+        .slice(0, -1)
+        .reduce((sum, log) => sum + (parseFloat(log.fuelCapacity) || 0), 0);
+
+      if (totalFuel > 0) {
+        actualAverage = (totalDistance / totalFuel).toFixed(2);
+      }
+    }
+
+    return { totalKm, age, actualAverage };
+  };
+
+  const stats = getPerformanceStats();
+
   return (
     <div className="vehicle-container">
       <Container fluid className="vehicle-content">
@@ -449,6 +507,25 @@ function Vehicle() {
                   >
                     <span>+</span> Add Log
                   </Button>
+                </div>
+
+                <div className="performance-container">
+                  <div className="performance-card">
+                    <span className="perf-label">Actual Average</span>
+                    <span className="perf-value">
+                      {stats?.actualAverage} <small>km/L</small>
+                    </span>
+                  </div>
+                  <div className="performance-card">
+                    <span className="perf-label">Vehicle Age</span>
+                    <span className="perf-value">{stats?.age}</span>
+                  </div>
+                  <div className="performance-card">
+                    <span className="perf-label">Total KM Ride</span>
+                    <span className="perf-value">
+                      {stats?.totalKm} <small>KM</small>
+                    </span>
+                  </div>
                 </div>
 
                 <div className="logs-section">

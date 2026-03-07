@@ -225,6 +225,66 @@
     color: #ffffff;
 }
 
+.performance-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.performance-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.performance-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #39ff14;
+    opacity: 0.6;
+}
+
+.performance-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(57, 255, 20, 0.3);
+    background: linear-gradient(135deg, rgba(57, 255, 20, 0.05), rgba(255, 255, 255, 0.02));
+}
+
+.perf-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8c8c8c;
+    font-weight: 600;
+}
+
+.perf-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.perf-value small {
+    font-size: 12px;
+    color: #39ff14;
+    font-weight: 500;
+}
+
 .logs-section {
     margin-top: 24px;
 }
