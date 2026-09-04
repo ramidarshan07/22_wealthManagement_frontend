@@ -123,6 +123,30 @@
     color: #ffffff;
 }
 
+.account-card-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.account-card-delete-btn {
+    background: transparent;
+    border: none;
+    color: #777777;
+    padding: 3px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.account-card-delete-btn:hover {
+    color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.15);
+}
+
 .account-card-body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -179,6 +203,13 @@
     margin-top: 6px;
 }
 
+.detail-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .add-transaction-btn {
     background: rgba(57, 255, 20, 0.1);
     border: 1px solid rgba(57, 255, 20, 0.4);
@@ -193,6 +224,26 @@
 .add-transaction-btn:hover {
     background: rgba(57, 255, 20, 0.2);
     color: #ffffff;
+}
+
+.delete-account-btn {
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid rgba(255, 77, 77, 0.35);
+    font-weight: 600;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: #ff5252;
+    transition: all 0.2s ease;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+}
+
+.delete-account-btn:hover {
+    background: rgba(255, 77, 77, 0.22);
+    border-color: #ff5252;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
 }
 
 .summary-grid {

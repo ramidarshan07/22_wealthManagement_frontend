@@ -246,11 +246,15 @@ function Sidebar({ isMobileSidebarOpen, closeMobileSidebar }) {
           ))}
         </Nav>
       </div>
-      <div
-        className="p-2 text-center position-fixed-bottom"
-        style={{ fontSize: "15px", color: "#00CC33" }}
-      >
-        Design & Develope By Darshan
+      <div className="sidebar-credit">
+        <a
+          href="https://darshanrami-portfolio.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sidebar-credit-link"
+        >
+          Design & Develope By Darshan
+        </a>
       </div>
     </div>
   );

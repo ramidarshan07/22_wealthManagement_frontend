@@ -51,7 +51,7 @@ function Account() {
         currency: "INR",
         maximumFractionDigits: 2,
       }),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -246,7 +246,7 @@ function Account() {
             date: transactionFormData.date,
             note: transactionFormData.note,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -301,7 +301,7 @@ function Account() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const data = await response.json();
@@ -315,6 +315,49 @@ function Account() {
     } catch (error) {
       console.error("Error deleting transaction:", error);
       toast.error("Error deleting entry");
+    }
+  };
+
+  const handleDeleteAccount = async (account) => {
+    if (!account) return;
+    const result = await Swal.fire({
+      title: `Delete "${account.name}"?`,
+      text: "This will permanently delete this account and all its transaction records.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#444",
+      confirmButtonText: "Yes, delete account!",
+      cancelButtonText: "Cancel",
+      background: "#1a1a1a",
+      color: "#f5f5f5",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const token = getToken();
+      const response = await fetch(`${API_URL}/accounts/${account._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        toast.success("Account deleted successfully");
+        if (selectedAccount?._id === account._id) {
+          setSelectedAccount(null);
+        }
+        fetchAccounts();
+      } else {
+        toast.error(data.message || "Failed to delete account");
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast.error("Error deleting account");
     }
   };
 
@@ -378,17 +421,19 @@ function Account() {
                         {account.name} -{" "}
                         {account.accountType === "lent" ? "Lent" : "Borrowed"}
                       </h4>
-                      <Badge
-                        bg={
-                          account.summary?.outstanding > 0
-                            ? "warning"
-                            : "success"
-                        }
-                      >
-                        {account.summary?.outstanding > 0
-                          ? "Pending"
-                          : "Settled"}
-                      </Badge>
+                      <div className="account-card-header-actions">
+                        <Badge
+                          bg={
+                            account.summary?.outstanding > 0
+                              ? "warning"
+                              : "success"
+                          }
+                        >
+                          {account.summary?.outstanding > 0
+                            ? "Pending"
+                            : "Settled"}
+                        </Badge>
+                      </div>
                     </div>
                     <div className="account-card-body">
                       <div>
@@ -445,25 +490,47 @@ function Account() {
                       </p>
                     )}
                   </div>
-                  <Button
-                    className="add-transaction-btn"
-                    onClick={() => {
-                      const defaultType =
-                        selectedAccount.accountType === "lent"
-                          ? "received"
-                          : "repay";
-                      setTransactionFormData({
-                        type: defaultType,
-                        amount: "",
-                        paymentChannel: "Cash",
-                        date: defaultDate(),
-                        note: "",
-                      });
-                      setShowTransactionModal(true);
-                    }}
-                  >
-                    <span>+</span> Add Entry
-                  </Button>
+                  <div className="detail-actions">
+                    <Button
+                      className="add-transaction-btn"
+                      onClick={() => {
+                        const defaultType =
+                          selectedAccount.accountType === "lent"
+                            ? "received"
+                            : "repay";
+                        setTransactionFormData({
+                          type: defaultType,
+                          amount: "",
+                          paymentChannel: "Cash",
+                          date: defaultDate(),
+                          note: "",
+                        });
+                        setShowTransactionModal(true);
+                      }}
+                    >
+                      <span>+</span> Add Entry
+                    </Button>
+                    <Button
+                      className="delete-account-btn"
+                      onClick={() => handleDeleteAccount(selectedAccount)}
+                      title="Delete this account"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                      Delete
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="summary-grid">
@@ -539,10 +606,10 @@ function Account() {
                                     {txn.type === "borrow"
                                       ? "Borrow"
                                       : txn.type === "lent"
-                                      ? "Lent"
-                                      : txn.type === "received"
-                                      ? "Received"
-                                      : "Repay"}
+                                        ? "Lent"
+                                        : txn.type === "received"
+                                          ? "Received"
+                                          : "Repay"}
                                   </span>
                                 </td>
                                 <td

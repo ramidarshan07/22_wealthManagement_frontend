@@ -82,3 +82,25 @@
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: rgba(57, 255, 20, 0.5);
 }
+
+.sidebar-credit {
+    padding: 0.85rem 0.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(57, 255, 20, 0.15);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-credit-link {
+    color: #00CC33;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.sidebar-credit-link:hover {
+    color: var(--accent-green);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+    transform: translateY(-1px);
+}

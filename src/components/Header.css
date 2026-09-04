@@ -18,13 +18,32 @@
 
 .profile-item {
   color: rgb(233, 233, 233);
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 1.25rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .profile-item:hover {
   color: var(--accent-green);
   background-color: rgba(57, 255, 20, 0.1);
-  border-left: 2px solid var(--accent-green);
+  border-left: 3px solid var(--accent-green);
+}
+
+.profile-item.logout-item {
+  color: #ff5252;
+}
+
+.profile-item.logout-item:hover {
+  color: #ff3333;
+  background-color: rgba(255, 82, 82, 0.12);
+  border-left: 3px solid #ff5252;
 }
 
 .header-left {
@@ -173,29 +192,9 @@
   color: var(--text-gray);
 }
 
-.logout-button {
-  background: #0a0a0a;
-  color: #ff3232;
-  padding: 0.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.logout-button:hover {
-  border-color: var(--accent-green);
-  transform: translateY(-2px);
-}
-
-.logout-button:active {
-  transform: translateY(0);
-}
-
-.logout-button svg {
-  display: block;
+.profile-dropdown-menu .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin: 0.25rem 0;
 }
 
 /* Responsive adjustments */

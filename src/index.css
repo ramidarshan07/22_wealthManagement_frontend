@@ -79,3 +79,42 @@ body {
 .Toastify__toast-icon {
   color: var(--accent-green) !important;
 }
+
+/* =========================================================
+   Global Thin Custom Scrollbar (Neon Green Theme)
+   ========================================================= */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57, 255, 20, 0.4) rgba(20, 20, 20, 0.6);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 15, 15, 0.7);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(57, 255, 20, 0.35);
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.8);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--accent-green-dark);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
