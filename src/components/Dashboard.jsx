@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Container,
   Card,
@@ -10,7 +10,42 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 import "./Dashboard.css";
+
+const formatDateKey = (d) => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const getInitialDates = () => {
+  const today = new Date();
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(today.getDate() - 6);
+  return {
+    startDate: formatDateKey(sevenDaysAgo),
+    endDate: formatDateKey(today),
+  };
+};
+
+const formatChartDate = (dateStr) => {
+  if (!dateStr) return "";
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
 
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
@@ -22,12 +57,221 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isFetchingData, setIsFetchingData] = useState(true);
+  const initialDates = useMemo(() => getInitialDates(), []);
+  const [datePreset, setDatePreset] = useState("7days");
+  const [startDate, setStartDate] = useState(initialDates.startDate);
+  const [endDate, setEndDate] = useState(initialDates.endDate);
+  const [analyticsExpenses, setAnalyticsExpenses] = useState([]);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchDashboardData();
   }, [API_URL]);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      fetchAnalyticsData(startDate, endDate);
+    }
+  }, [startDate, endDate, API_URL]);
+
+  const fetchAnalyticsData = async (start, end) => {
+    setAnalyticsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const res = await fetch(
+        `${API_URL}/expenses?startDate=${start}&endDate=${end}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setAnalyticsExpenses(data.data || []);
+      }
+    } catch (err) {
+      console.error("Error fetching analytics expenses:", err);
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  };
+
+  const handlePresetChange = (preset) => {
+    setDatePreset(preset);
+    const today = new Date();
+    if (preset === "7days") {
+      const d = new Date();
+      d.setDate(today.getDate() - 6);
+      setStartDate(formatDateKey(d));
+      setEndDate(formatDateKey(today));
+    } else if (preset === "thisMonth") {
+      const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+      setStartDate(formatDateKey(firstDay));
+      setEndDate(formatDateKey(today));
+    } else if (preset === "30days") {
+      const d = new Date();
+      d.setDate(today.getDate() - 29);
+      setStartDate(formatDateKey(d));
+      setEndDate(formatDateKey(today));
+    }
+  };
+
+  const handleCustomDateChange = (type, value) => {
+    setDatePreset("custom");
+    if (type === "start") setStartDate(value);
+    if (type === "end") setEndDate(value);
+  };
+
+  const isCreditType = (amountType) => {
+    if (!amountType) return false;
+    const name =
+      typeof amountType === "string" ? amountType : amountType.name || "";
+    return (
+      name.toLowerCase().includes("credit") ||
+      name.toLowerCase().includes("income")
+    );
+  };
+
+  const trendData = useMemo(() => {
+    if (!startDate || !endDate) return [];
+    const map = {};
+    const start = new Date(startDate + "T00:00:00");
+    const end = new Date(endDate + "T00:00:00");
+    const current = new Date(start);
+
+    while (current <= end) {
+      const key = formatDateKey(current);
+      map[key] = {
+        date: key,
+        label: formatChartDate(key),
+        income: 0,
+        expense: 0,
+      };
+      current.setDate(current.getDate() + 1);
+    }
+
+    analyticsExpenses.forEach((exp) => {
+      if (!exp.date) return;
+      const expDateStr = exp.date.split("T")[0];
+      if (map[expDateStr]) {
+        const isCredit = isCreditType(exp.amountType);
+        if (isCredit) {
+          map[expDateStr].income += exp.amount || 0;
+        } else {
+          map[expDateStr].expense += exp.amount || 0;
+        }
+      }
+    });
+
+    return Object.values(map);
+  }, [analyticsExpenses, startDate, endDate]);
+
+  const categoryData = useMemo(() => {
+    const debitExpenses = analyticsExpenses.filter(
+      (exp) => !isCreditType(exp.amountType)
+    );
+
+    const totalDebit = debitExpenses.reduce(
+      (sum, exp) => sum + (exp.amount || 0),
+      0
+    );
+    const catMap = {};
+
+    debitExpenses.forEach((exp) => {
+      const catName = exp.category?.name || "Other";
+      catMap[catName] = (catMap[catName] || 0) + (exp.amount || 0);
+    });
+
+    const neonColors = [
+      "#39FF14", // Neon Green
+      "#00E5FF", // Neon Cyan
+      "#FFB300", // Amber Gold
+      "#FF3366", // Neon Coral Pink
+      "#7C4DFF", // Vivid Purple
+      "#00E676", // Bright Mint
+      "#FF6D00", // Vibrant Orange
+      "#E040FB", // Neon Magenta
+      "#2979FF", // Electric Blue
+      "#FFD600", // Bright Yellow
+    ];
+
+    const sortedCategories = Object.entries(catMap)
+      .map(([name, value], idx) => ({
+        name,
+        value,
+        percentage:
+          totalDebit > 0 ? ((value / totalDebit) * 100).toFixed(1) : 0,
+        color: neonColors[idx % neonColors.length],
+      }))
+      .sort((a, b) => b.value - a.value);
+
+    return { items: sortedCategories, total: totalDebit };
+  }, [analyticsExpenses]);
+
+  const CustomTrendTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const incomeVal =
+        payload.find((p) => p.dataKey === "income")?.value || 0;
+      const expenseVal =
+        payload.find((p) => p.dataKey === "expense")?.value || 0;
+      const netVal = incomeVal - expenseVal;
+      return (
+        <div className="chart-tooltip">
+          <div className="tooltip-date">{label}</div>
+          <div className="tooltip-row income">
+            <span className="tooltip-label">Income:</span>
+            <span className="tooltip-val">₹ {incomeVal.toFixed(2)}</span>
+          </div>
+          <div className="tooltip-row expense">
+            <span className="tooltip-label">Expense:</span>
+            <span className="tooltip-val">₹ {expenseVal.toFixed(2)}</span>
+          </div>
+          <div
+            className={`tooltip-row net ${
+              netVal >= 0 ? "positive" : "negative"
+            }`}
+          >
+            <span className="tooltip-label">Net:</span>
+            <span className="tooltip-val">
+              {netVal >= 0 ? "+" : ""}₹ {netVal.toFixed(2)}
+            </span>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const CustomDonutTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0];
+      return (
+        <div className="chart-tooltip">
+          <div
+            className="tooltip-category"
+            style={{ color: data.payload.color }}
+          >
+            {data.name}
+          </div>
+          <div className="tooltip-row">
+            <span className="tooltip-label">Amount:</span>
+            <span className="tooltip-val">₹ {data.value.toFixed(2)}</span>
+          </div>
+          <div className="tooltip-row">
+            <span className="tooltip-label">Share:</span>
+            <span className="tooltip-val">{data.payload.percentage}%</span>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -273,6 +517,286 @@ function Dashboard() {
                     </Card>
                   );
                 })}
+            </div>
+          )}
+        </div>
+
+        {/* Financial Analytics & Trends */}
+        <div className="analytics-section">
+          <div className="analytics-header">
+            <div className="analytics-title-group">
+              <span className="account-eyebrow">FINANCIAL OVERVIEW</span>
+              <h2 className="section-title">Analytics & Trends</h2>
+            </div>
+            <div className="analytics-controls">
+              <div className="preset-buttons">
+                <button
+                  type="button"
+                  className={`preset-btn ${
+                    datePreset === "7days" ? "active" : ""
+                  }`}
+                  onClick={() => handlePresetChange("7days")}
+                >
+                  Last 7 Days
+                </button>
+                <button
+                  type="button"
+                  className={`preset-btn ${
+                    datePreset === "thisMonth" ? "active" : ""
+                  }`}
+                  onClick={() => handlePresetChange("thisMonth")}
+                >
+                  This Month
+                </button>
+                <button
+                  type="button"
+                  className={`preset-btn ${
+                    datePreset === "30days" ? "active" : ""
+                  }`}
+                  onClick={() => handlePresetChange("30days")}
+                >
+                  Last 30 Days
+                </button>
+                <button
+                  type="button"
+                  className={`preset-btn ${
+                    datePreset === "custom" ? "active" : ""
+                  }`}
+                  onClick={() => handlePresetChange("custom")}
+                >
+                  Custom
+                </button>
+              </div>
+              <div className="date-inputs-wrapper">
+                <div className="date-input-item">
+                  <label>From</label>
+                  <Form.Control
+                    type="date"
+                    className="analytics-date-input"
+                    value={startDate}
+                    onChange={(e) =>
+                      handleCustomDateChange("start", e.target.value)
+                    }
+                  />
+                </div>
+                <div className="date-input-item">
+                  <label>To</label>
+                  <Form.Control
+                    type="date"
+                    className="analytics-date-input"
+                    value={endDate}
+                    onChange={(e) =>
+                      handleCustomDateChange("end", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {analyticsLoading ? (
+            <div className="analytics-loading">
+              <Spinner animation="border" variant="success" />
+              <span>Loading analytics data...</span>
+            </div>
+          ) : (
+            <div className="analytics-grid">
+              {/* Left Chart: Income vs Expense Trend */}
+              <div className="chart-card">
+                <div className="chart-card-header">
+                  <div className="chart-card-title-group">
+                    <h3 className="chart-title">Income vs Expense Trend</h3>
+                    <span className="chart-subtitle">
+                      Daily cash flow comparison
+                    </span>
+                  </div>
+                  <div className="chart-legend-pills">
+                    <span className="legend-pill income">
+                      <span className="legend-dot income"></span> Income
+                    </span>
+                    <span className="legend-pill expense">
+                      <span className="legend-dot expense"></span> Expense
+                    </span>
+                  </div>
+                </div>
+                <div className="chart-container">
+                  <ResponsiveContainer width="100%" height={260}>
+                    <AreaChart
+                      data={trendData}
+                      margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+                    >
+                      <defs>
+                        <linearGradient
+                          id="incomeGrad"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#39FF14"
+                            stopOpacity={0.4}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#39FF14"
+                            stopOpacity={0.0}
+                          />
+                        </linearGradient>
+                        <linearGradient
+                          id="expenseGrad"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#FF4D4D"
+                            stopOpacity={0.4}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#FF4D4D"
+                            stopOpacity={0.0}
+                          />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="rgba(255, 255, 255, 0.07)"
+                        vertical={false}
+                      />
+                      <XAxis
+                        dataKey="label"
+                        stroke="#666"
+                        tick={{ fill: "#888", fontSize: 11 }}
+                        tickLine={false}
+                      />
+                      <YAxis
+                        stroke="#666"
+                        tick={{ fill: "#888", fontSize: 11 }}
+                        tickLine={false}
+                        axisLine={false}
+                        tickFormatter={(v) =>
+                          v >= 1000 ? `₹${(v / 1000).toFixed(0)}k` : `₹${v}`
+                        }
+                      />
+                      <RechartsTooltip content={<CustomTrendTooltip />} />
+                      <Area
+                        type="monotone"
+                        dataKey="income"
+                        name="Income"
+                        stroke="#39FF14"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#incomeGrad)"
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="expense"
+                        name="Expense"
+                        stroke="#FF4D4D"
+                        strokeWidth={2.5}
+                        fillOpacity={1}
+                        fill="url(#expenseGrad)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Right Chart: Category Donut Chart */}
+              <div className="chart-card">
+                <div className="chart-card-header">
+                  <div className="chart-card-title-group">
+                    <h3 className="chart-title">Expense by Category</h3>
+                    <span className="chart-subtitle">
+                      Spending breakdown
+                    </span>
+                  </div>
+                  <span className="chart-badge">
+                    {categoryData.items.length} Categories
+                  </span>
+                </div>
+
+                {categoryData.items.length === 0 ? (
+                  <div className="chart-empty-state">
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span>No expense records found for this period</span>
+                  </div>
+                ) : (
+                  <div className="donut-content-wrapper">
+                    <div className="donut-chart-box">
+                      <ResponsiveContainer width="100%" height={210}>
+                        <PieChart>
+                          <Pie
+                            data={categoryData.items}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={58}
+                            outerRadius={85}
+                            paddingAngle={3}
+                            dataKey="value"
+                            stroke="#1e1e1e"
+                            strokeWidth={3}
+                          >
+                            {categoryData.items.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <RechartsTooltip content={<CustomDonutTooltip />} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                      <div className="donut-center-info">
+                        <span className="donut-center-label">TOTAL SPENT</span>
+                        <span className="donut-center-value">
+                          ₹{categoryData.total.toLocaleString("en-IN")}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="category-legend-list">
+                      {categoryData.items.map((cat, idx) => (
+                        <div key={idx} className="category-legend-row">
+                          <div className="legend-left">
+                            <span
+                              className="category-color-dot"
+                              style={{ backgroundColor: cat.color }}
+                            ></span>
+                            <span
+                              className="category-legend-name"
+                              title={cat.name}
+                            >
+                              {cat.name}
+                            </span>
+                          </div>
+                          <div className="legend-right">
+                            <span className="category-legend-amt">
+                              ₹{cat.value.toFixed(0)}
+                            </span>
+                            <span className="category-legend-pct">
+                              {cat.percentage}%
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

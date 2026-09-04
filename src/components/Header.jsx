@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar, Dropdown } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,86 @@ function Header({ toggleMobileSidebar, isMobileSidebarOpen }) {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showWave, setShowWave] = useState(false);
   const navigate = useNavigate();
-  const userName = localStorage.getItem("name") || "User";
+  const [userName, setUserName] = useState(
+    () => localStorage.getItem("name") || "User"
+  );
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
   const userEmail = localStorage.getItem("email") || "";
+
+  // Keep userName updated if profile changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedName = localStorage.getItem("name") || "User";
+      setUserName((prev) => (prev !== storedName ? storedName : prev));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    const interval = setInterval(handleStorageChange, 2000);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  // Typewriter animation: types name, waits 30 seconds, then re-types
+  useEffect(() => {
+    const targetName = userName || "User";
+    let isCancelled = false;
+    let timer = null;
+
+    const typeForward = (index) => {
+      if (isCancelled) return;
+      setIsTyping(true);
+      setDisplayedText(targetName.slice(0, index));
+
+      if (index < targetName.length) {
+        timer = setTimeout(() => {
+          typeForward(index + 1);
+        }, 110);
+      } else {
+        // Typing finished: keep cursor for 1.5s, then hide cursor and wait 30s
+        timer = setTimeout(() => {
+          if (!isCancelled) {
+            setIsTyping(false);
+            timer = setTimeout(() => {
+              if (!isCancelled) {
+                typeBackward(targetName.length);
+              }
+            }, 30000);
+          }
+        }, 1500);
+      }
+    };
+
+    const typeBackward = (index) => {
+      if (isCancelled) return;
+      setIsTyping(true);
+      setDisplayedText(targetName.slice(0, index));
+
+      if (index > 0) {
+        timer = setTimeout(() => {
+          typeBackward(index - 1);
+        }, 50);
+      } else {
+        // Brief pause before typing forward again
+        timer = setTimeout(() => {
+          if (!isCancelled) {
+            typeForward(1);
+          }
+        }, 350);
+      }
+    };
+
+    // Start initial typing
+    typeForward(1);
+
+    return () => {
+      isCancelled = true;
+      if (timer) clearTimeout(timer);
+    };
+  }, [userName]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -105,7 +183,15 @@ function Header({ toggleMobileSidebar, isMobileSidebarOpen }) {
             </div>
           </div>
           <div className="header-center">
-            <h2 className="header-user-name">{userName}</h2>
+            <div className="header-title-wrapper">
+              <h2 className="header-user-name">{displayedText}</h2>
+              <span
+                className={`typing-cursor ${isTyping ? "typing" : "idle"}`}
+                aria-hidden="true"
+              >
+                |
+              </span>
+            </div>
           </div>
           <div className="header-right">
             <button
