@@ -89,7 +89,7 @@ function Dashboard() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (res.ok) {
         const data = await res.json();
@@ -174,12 +174,12 @@ function Dashboard() {
 
   const categoryData = useMemo(() => {
     const debitExpenses = analyticsExpenses.filter(
-      (exp) => !isCreditType(exp.amountType)
+      (exp) => !isCreditType(exp.amountType),
     );
 
     const totalDebit = debitExpenses.reduce(
       (sum, exp) => sum + (exp.amount || 0),
-      0
+      0,
     );
     const catMap = {};
 
@@ -216,8 +216,7 @@ function Dashboard() {
 
   const CustomTrendTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      const incomeVal =
-        payload.find((p) => p.dataKey === "income")?.value || 0;
+      const incomeVal = payload.find((p) => p.dataKey === "income")?.value || 0;
       const expenseVal =
         payload.find((p) => p.dataKey === "expense")?.value || 0;
       const netVal = incomeVal - expenseVal;
@@ -343,7 +342,7 @@ function Dashboard() {
         // Calculate total balance from payment method balances
         const total = allBalances.reduce(
           (sum, pmb) => sum + (pmb.balance || 0),
-          0
+          0,
         );
         setTotalBalance(total);
 
@@ -368,7 +367,7 @@ function Dashboard() {
               ...pmb,
               credit: statsMap[pmb.paymentMethodId]?.credit || 0,
               debit: statsMap[pmb.paymentMethodId]?.debit || 0,
-            }))
+            })),
           );
         }
       }
@@ -383,7 +382,7 @@ function Dashboard() {
   const handleDoubleClick = (paymentMethod) => {
     // Find balance for this payment method
     const balance = paymentMethodBalances.find(
-      (b) => b.paymentMethodId === paymentMethod._id
+      (b) => b.paymentMethodId === paymentMethod._id,
     );
     setEditingPaymentMethod(paymentMethod);
     setBalanceInput(balance ? balance.balance.toString() : "0");
@@ -427,7 +426,7 @@ function Dashboard() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ balance: newBalance }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -475,7 +474,7 @@ function Dashboard() {
                 .filter((pm) => pm.status === "active")
                 .map((paymentMethod) => {
                   const balance = paymentMethodBalances.find(
-                    (b) => b.paymentMethodId === paymentMethod._id
+                    (b) => b.paymentMethodId === paymentMethod._id,
                   ) || {
                     balance: 0,
                     credit: 0,
@@ -499,20 +498,6 @@ function Dashboard() {
                             ₹ {balance.balance.toFixed(2)}
                           </span>
                         </div>
-                        {/* <div className="pm-stats">
-                        <div className="pm-stat">
-                          <span className="pm-stat-label">Credit:</span>
-                          <span className="pm-stat-value credit">
-                            ₹ {(balance.credit || 0).toFixed(2)}
-                          </span>
-                        </div>
-                        <div className="pm-stat">
-                          <span className="pm-stat-label">Debit:</span>
-                          <span className="pm-stat-value debit">
-                            ₹ {(balance.debit || 0).toFixed(2)}
-                          </span>
-                        </div>
-                      </div> */}
                       </Card.Body>
                     </Card>
                   );
@@ -712,9 +697,7 @@ function Dashboard() {
                 <div className="chart-card-header">
                   <div className="chart-card-title-group">
                     <h3 className="chart-title">Expense by Category</h3>
-                    <span className="chart-subtitle">
-                      Spending breakdown
-                    </span>
+                    <span className="chart-subtitle">Spending breakdown</span>
                   </div>
                   <span className="chart-badge">
                     {categoryData.items.length} Categories
